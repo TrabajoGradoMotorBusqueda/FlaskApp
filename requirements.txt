@@ -1,3 +1,4 @@
-flask
+flask~=1.1.2
 bootstrap-flask
-
+flask-wtf
+WTForms~=2.3.3

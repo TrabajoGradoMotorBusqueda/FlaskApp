@@ -1,4 +1,5 @@
 {% extends 'base.html' %}
+{% from 'bootstrap/form.html' import render_form, render_field %}
 
 {% block styles %}
     {{ super() }}
@@ -21,12 +22,15 @@
                     <div class="row">
                         <div class="col-md-10 offset-md-1">
                             <div class="card m-auto" style="max-width:850px">
-                                <div class="card-body">
-                                    <form class="d-flex align-items-center"><i class="fas fa-search d-none d-sm-block h4 text-body m-0">
-                                        </i><input class="form-control form-control-lg flex-shrink-1 form-control-borderless" type="search" placeholder="Busqueda de documentos de Investigación" name="searchbar">
-                                        <button class="btn btn-success btn-lg" type="submit">Buscar</button>
-                                    </form>
-                                </div>
+                                <form class="card-body" action="" method="post" role="search">
+                                    <div class="d-flex align-items-center">
+                                        {{ search_form.csrf_token() }}
+                                        <i class="fas fa-search d-none d-sm-block h4 text-body m-0"></i>
+                                        {{ search_form.searchbar(class='form-control form-control-lg flex-shrink-1 form-control-borderless',
+                                        placeholder='Busqueda de documentos de Investigación', type='search', value='') }}
+                                        {{ search_form.submit(class='btn btn-success btn-lg', type='submit') }}
+                                    </div>
+                                </form>
                             </div>
                         </div>
                     </div>

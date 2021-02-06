@@ -1,13 +1,25 @@
 # Flask Libraries
 from flask import render_template
 
-# flaskr Libraries
-from flaskr import create_app
+# App Modules
+from app import create_app
+from app.forms import SearchForm
 
 app = create_app() #Iniciamos la aplicacion de Flask
 
 
-@app.route('/')
+@app.route('/',  methods=['GET', 'POST'])
 def index():
-    return render_template('index.html', duro="Hola")
+    search_form = SearchForm()
+
+    context = {
+        'search_form': search_form
+    }
+
+    if search_form.validate_on_submit():
+        # Realizamos la tarea de busqueda.
+        print(search_form.searchbar.data)
+        print('Realizamos la busqueda')
+
+    return render_template('index.html', **context)
 
