@@ -149,4 +149,7 @@ dmypy.json
 # PyCharm
 .idea
 
+#Modelos D2V
+modelos/
+
 # End of https://www.toptal.com/developers/gitignore/api/flask
