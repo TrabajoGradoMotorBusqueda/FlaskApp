@@ -1,7 +1,7 @@
 from collections import Counter
 from itertools import chain
 
-from ontologia import *
+from ontologia import ontologia
 
 
 def ranking_documentos_ontologia(palabras):
@@ -22,3 +22,14 @@ def ranking_documentos_ontologia(palabras):
     ranking_busqueda_id = [id_pi.get_id_proyecto_investigacion()[0] for id_pi in ranking_busqueda]
 
     return ranking_busqueda, ranking_busqueda_id
+
+
+def busqueda_lista_documentos(docs_id):
+    documentos = []
+
+    # Buscamos documentos que tengan esas palabras
+    for doc in docs_id:
+        documento = ontologia.search(id_proyecto_investigacion=doc)
+        documentos.append(documento[0])
+
+    return documentos

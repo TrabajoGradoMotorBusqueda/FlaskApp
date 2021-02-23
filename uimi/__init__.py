@@ -2,8 +2,10 @@ import os
 
 root_folder = os.path.dirname(os.path.abspath(__file__))
 
-# Gensim
+# Gensim DOC2VEC
 from .modelos import Models
+
+modelos = Models()
 
 # ElasticSearch
 from .elastic import ElasticSearchEngine
@@ -14,11 +16,7 @@ elasticsearch = ElasticSearchEngine()
 from .words import palabras_similares
 
 # Busqueda Ontologia
-from .busqueda_ontologia import ranking_documentos_ontologia
-
-# Doc2Vec
-modelos = Models()
-D2V = modelos.modeloD2V
+from .busqueda_ontologia import ranking_documentos_ontologia, busqueda_lista_documentos
 
 
 # Ontologia
@@ -34,13 +32,15 @@ def search_engine(palabras):
         modelos.modeloD2V.infer_vector([' '.join(palabras)]),  # Parametro 1
         len(documentos_ontologia))  # Parametro 2
 
-    ranking_busqueda_id = []
-    for ontologia_id, d2v_id in zip(id_documentos_ontologia, id_documentos_d2v):
-        if ontologia_id == d2v_id:
-            ranking_busqueda_id.append(ontologia_id)
-        else:
-            if (ontologia_id not in ranking_busqueda_id) and (d2v_id not in ranking_busqueda_id):
-                ranking_busqueda_id.append(ontologia_id)
-                ranking_busqueda_id.append(d2v_id)
+    documentos_d2v = busqueda_lista_documentos(id_documentos_d2v)  # Documentos Restantes D2V
 
-    return ranking_busqueda_id
+    ranking_final_documentos = []
+    for ontologia_doc, d2v_doc in zip(documentos_ontologia, documentos_d2v):
+        if ontologia_doc == d2v_doc:
+            ranking_final_documentos.append(ontologia_doc)
+        else:
+            if (ontologia_doc not in ranking_final_documentos) and (d2v_doc not in ranking_final_documentos):
+                ranking_final_documentos.append(ontologia_doc)
+                ranking_final_documentos.append(d2v_doc)
+
+    return ranking_final_documentos
