@@ -1,9 +1,20 @@
+"""
+ Create App
+ Add DB
+
+ add Config Flask
+
+ register blueprints
+
+"""
 # Flask Libraries
 from flask import Flask
+from flask_sqlalchemy import SQLAlchemy
+from flask_migrate import Migrate
 from flask_bootstrap import Bootstrap
 
 # Config Files
-from .config import Config
+from .config import Config, BASE_DIR
 
 
 def create_app():

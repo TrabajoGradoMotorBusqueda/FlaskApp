@@ -153,3 +153,6 @@ dmypy.json
 modelos/
 
 # End of https://www.toptal.com/developers/gitignore/api/flask
+/doc2vec/modeloD2V.model
+/migrations/
+/FILES/

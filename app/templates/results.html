@@ -95,7 +95,7 @@ nada
                             <h6 class="text-muted mb-2">Palabras Clave</h6>
                             <p>Palabra Clave 1 - Palabra Clave - Palabra Clave 3 - Palabra Clave 4 - Palabra Clave 5.</p>
                         </div>
-                        <a id="card-show" class="card-link align-self-center" href="#" data-toggle="modal" data-target="#testmodal">
+                        <a id="card-show" data-bss-hover-animate="pulse" class="card-link align-self-center" href="#" data-toggle="modal" data-target="#testmodal">
                             Ver más
                         </a>
                     </div>
@@ -120,11 +120,12 @@ nada
 
 {% block scripts %}
     {{ super() }}
-{#    <script src="{{ url_for('static', filename='js/bs-init.js')}}"></script>#}
+    <script src="{{ url_for('static', filename='js/resultados.js')}}"></script>
     <script>
-        function test_func(data) {
-        console.log(data);
-    }
-    test_func({{ resultados|safe }})
+        data = JSON.parse({{ resultados | tojson | safe }})
+        load_results(data);
     </script>
 {% endblock %}
+
+
+

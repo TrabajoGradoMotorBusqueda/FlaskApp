@@ -1,10 +1,11 @@
-import os
-this_folder = os.path.dirname(os.path.abspath(__file__))
 from owlready2 import *
+import os
+
+this_folder = os.path.dirname(os.path.abspath(__file__))
 
 # agregar la carpeta que contiene la ontologia,
 # para busqueda local, sino en internet
-onto_path.append(this_folder+"/Data")
+onto_path.append(this_folder + "/Data")
 
 # carga de ontologia por IRI o por ruta directa al archivo owl
 
@@ -12,7 +13,6 @@ ontologia = get_ontology(
     "http://www.semanticweb.org/OntologiaInvestigacionPrueba").load()
 
 with ontologia:
-
     class Grupo_investigacion(Thing):
 
         def get_id_grupo_investigacion(self):
@@ -167,7 +167,6 @@ with ontologia:
         def relation_ie_es_autor_pi(self, pi):
             self.ie_es_autor_pi.append(pi)
 
-
     # CLASE PALABRA
     class Palabra(Thing):
 
@@ -181,10 +180,10 @@ with ontologia:
             return self.descripcion_palabra
 
         def set_descripcion_palabra(self, descripcion_palabra):
-            if (len(self.descripcion_palabra) > 0):
-                self.descripcion_palabra.append(descripcion_palabra)
+            if len(self.descripcion_palabra) > 0:
+                self.descripcion_palabra.extend(descripcion_palabra)
             else:
-                self.descripcion_palabra = [descripcion_palabra]
+                self.descripcion_palabra = descripcion_palabra
 
         def get_lema_palabra(self):
             return self.lema_palabra
@@ -249,19 +248,13 @@ with ontologia:
 
         def set_palabras_clave(self, palabra_clave):
             if (len(self.palabras_clave) > 0):
-                self.palabras_clave.append(palabra_clave)
+                self.palabras_clave.extend(palabra_clave)
             else:
-                self.palabras_clave = [palabra_clave]
+                self.palabras_clave = palabra_clave
 
         def relation_pi_tiene_palabra(self, palabra):
             self.pi_tiene_palabra.append(palabra)
 
-
-    ##FALTAN PALABRAS CLAVE OJO !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-    ##FALTAN PALABRAS CLAVE OJO !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-    ##FALTAN PALABRAS CLAVE OJO !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-    ##FALTAN PALABRAS CLAVE OJO !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-    ##FALTAN PALABRAS CLAVE OJO !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 
     # CLASE UNIVERSIDAD
     class Universidad(Thing):
@@ -283,6 +276,8 @@ with ontologia:
 
         def relation_universidad_tiene_viis(self, viis):
             self.universidad_tiene_viis.append(viis)
+
+
 
 
     # SUBCLASE FACULTAD
@@ -408,14 +403,3 @@ with ontologia:
 
         def relation_convocatoria_dirigida_investigador(self, investigador):
             self.convocatoria_dirigida_investigador.append(investigador)
-
-# Relacion Relacion Directa
-# class pi_tiene_palabra (ObjectProperty):
-#     domain = [Proyecto_investigacion]
-#     range = [Palabra]
-
-# Relacio Inversa
-# class palabra_describe_pi (ObjectProperty):
-#     domain = [Palabra]
-#     range = [Proyecto_investigacion]
-#     inverse_property = pi_tiene_palabra

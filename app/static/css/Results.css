@@ -1,0 +1,172 @@
+
+#nav-result{
+  background: linear-gradient(85deg, #479340 92%, #489441 100%), #489441;"
+}
+
+/*Navbar*/
+#nav-search{
+  color: rgb(255,255,255);
+  background-color: initial !important;
+}
+
+#nav-search>input{
+    color: rgb(255,255,255);
+    width: 260px;
+}
+
+#nav-search>input::placeholder{
+    color: rgb(255,255,255);
+}
+
+.custom-search-input {
+  border: none;
+  border-bottom: 2px solid #ffffff;
+  background: transparent;
+  outline: none;
+  padding-bottom: 5px;
+  min-width: 250px;
+  text-indent: 40px;
+}
+
+.search-area {
+  display: inline-block;
+}
+
+.search-icon {
+  font-size: 18px;
+  margin-right: -20px;
+  margin-top: 3px;
+}
+
+
+
+
+
+/*Resultados*/
+#container-results{
+  margin-top: 50px;
+  margin-bottom: -200px;
+}
+#row-results{
+  margin-top: 0;
+  margin-left: -15px;
+  margin-bottom: 15px;
+}
+#col-result{
+  padding-left: 0;
+  padding-right: 0;
+  margin-top: 25px;
+}
+
+#card-result{
+  border-radius: 20px;
+  box-shadow: 5px 5px 16px 4px rgba(0,0,0,0.2);
+  border-style: none;
+  width: 22rem;
+}
+#card-result-title{
+  width: 100%;
+  height: 150px;
+  border-top-left-radius: 20px;
+  border-top-right-radius: 20px;
+  border-style: dotted;
+  border-color: rgb(193,190,190);
+  background: #479340;
+}
+#card-result-title>h5{
+  font-family: 'Source Sans Pro', sans-serif;
+  font-weight: 700;
+  /*color: rgb(255,160,0);*/
+  /*color: #479340;*/
+  color:white;
+  padding: 15px;"
+}
+
+#card-result-data{
+  height: 253px;
+  border-style: none;
+  border-right-style: dotted;
+  border-right-color: #c1bebe;
+  border-bottom-style: dotted;
+  border-bottom-color: #c1bebe;
+  border-left-style: dotted;
+  border-left-color: #c1bebe;
+  border-bottom-right-radius: 20px;
+  border-bottom-left-radius: 20px;
+  padding: 10px 20px;
+}
+
+/*Autores*/
+#card-authors{
+  width: 100%;
+  height: 70px;
+}
+#card-authors>h6{
+  font-family: 'Source Sans Pro', sans-serif;
+  /*color: #757575;*/
+  color: rgb(255,160,0);
+  font-weight: 600;
+  font-size: 18px;
+  margin: 0;
+}
+#card-authors>p{
+  font-family: 'Source Sans Pro', sans-serif;
+  color: #212121;
+  margin-top: -5px;
+  font-size: 15px;
+  margin-bottom: 0;
+}
+
+/*Programa*/
+#card-program{
+  width: 100%;height: 50px;
+}
+#card-program>h6{
+  font-family: 'Source Sans Pro', sans-serif;
+  /*color: #757575;*/
+  color: rgb(255,160,0);
+  font-weight: 600;
+  font-size: 18px;
+  margin: 0;
+}
+#card-program>p{
+  font-family: 'Source Sans Pro', sans-serif;
+  color: #212121;
+  margin-top: -5px;
+  font-size: 14px;
+  margin-bottom: 0;
+}
+
+/*Keywords*/
+#card-keywords{
+  width: 100%;height: 70px;
+}
+#card-keywords>h6{
+  font-family: 'Source Sans Pro', sans-serif;
+  /*color: #757575;*/
+  color: rgb(255,160,0);
+  font-weight: 600;
+  font-size: 18px;
+  margin: 0;
+}
+#card-keywords>p{
+  font-family: 'Source Sans Pro', sans-serif;
+  color: #212121;
+  margin-top: -5px;
+  font-size: 14px;
+  margin-bottom: 0;
+}
+
+/*Boton*/
+#card-show{
+  background: #ee6666;
+  color: rgb(255,255,255);
+  border-radius: 17px;
+  margin-top: 30px;
+  padding: 4px 14px 6px;
+  font-family: 'Source Sans Pro', sans-serif;margin-top: auto;
+  box-shadow: 2px 2px 16px 1px rgba(117,117,117,0.8);
+  opacity: 0.8;
+  transition: 0.3s;
+}
+#card-show:hover {opacity: 1.5;}
