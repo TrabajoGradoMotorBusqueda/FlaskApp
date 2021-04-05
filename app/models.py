@@ -1,6 +1,5 @@
 # from sqlalchemy import Column, Integer, String, Text, ARRAY
-from main import db
-
+from app import db
 
 class DiccionarioLema(db.Model):
     __tablename__ = 'diccionario_lema'

@@ -13,17 +13,22 @@ from flask_sqlalchemy import SQLAlchemy
 from flask_migrate import Migrate
 from flask_bootstrap import Bootstrap
 
-# Config Files
-from .config import Config, BASE_DIR
+
 
 db = SQLAlchemy()
 
 
-def create_app():
+def create_app(settings_module):
     # Crear y Configurar Flask App
     app = Flask(__name__, instance_relative_config=True)
     # Cargar configuracion
-    app.config.from_object(Config)  # Configurar App
+    app.config.from_object(settings_module)  # Configurar App
+
+    # Load the configuration from the instance folder
+    if app.config.get('TESTING', False):
+        app.config.from_pyfile('config-testing.py', silent=True)
+    else:
+        app.config.from_pyfile('config.py', silent=True)
 
     # Registra Tablas en la BD
     db.init_app(app)
