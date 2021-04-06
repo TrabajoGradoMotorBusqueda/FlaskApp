@@ -8,14 +8,13 @@
 
 """
 # Flask Libraries
-from flask import Flask, render_template
+from flask import Flask
 from flask_sqlalchemy import SQLAlchemy
 from flask_migrate import Migrate
 from flask_bootstrap import Bootstrap
 
-
-
 db = SQLAlchemy()
+migrate = Migrate()
 
 
 def create_app(settings_module):
@@ -32,6 +31,8 @@ def create_app(settings_module):
 
     # Registra Tablas en la BD
     db.init_app(app)
+    migrate.init_app(app, db)
+    from . import models
 
     # Agregamos Bootstrap a la app
     bootstrap = Bootstrap(app)
