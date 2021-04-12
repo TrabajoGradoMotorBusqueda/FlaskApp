@@ -64,5 +64,4 @@ def lemmatizer(text):
 
 def lematizar_corpus(corpus):
     lemas_corpus = lemmatizer(corpus)
-    # vocabulario = set(lemas_corpus)
     return lemas_corpus

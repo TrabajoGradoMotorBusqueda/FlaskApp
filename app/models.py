@@ -1,4 +1,5 @@
 # from sqlalchemy import Column, Integer, String, Text, ARRAY
+from math import isnan as nan
 from app import db
 
 
@@ -11,21 +12,33 @@ class DiccionarioLema(db.Model):
         self.lema = lema
         self.palabras = palabras
 
-    def agregar_palabras(self, palabras):
-        self.palabras = palabras
-
     def __repr__(self):
         return f'DiccionarioLema({self.lema} => {self.palabras})'
 
     def __str__(self):
         return self.lema
 
+    def save(self, update=False):
+        if self.lema is not None and not update:
+            db.session.add(self)
+        db.session.commit()
+
+    def set_palabras(self, palabras):
+        self.palabras = palabras
+
+    def set_lema(self, lema):
+        self.lema = lema
+
+    @staticmethod
+    def get_by_lema(lema):
+        return DiccionarioLema.query.get(lema)
+
 
 class Investigacion(db.Model):
     __tablename__ = 'resumenes_investigacion'
 
     id = db.Column(db.Integer, primary_key=True, nullable=False)
-    id_investigacion = db.Column(db.String(8))
+    id_investigacion = db.Column(db.Integer)
     titulo_investigacion = db.Column(db.String(10000))
     resumen_investigacion = db.Column(db.Text)
     estado_investigacion = db.Column(db.String(100))
@@ -81,15 +94,49 @@ class Investigacion(db.Model):
     def __init__(self, values=None):
         if values is None:
             return
-        for attribute in values.keys():
-            setattr(self, attribute, values[attribute])
+        else:
+            self.__attributes_setter__(values)
 
     def __attributes_setter__(self, values):
         for attribute in values.keys():
-            setattr(self, attribute, values[attribute])
+            try:
+                value = int(values[attribute]) if not nan(values[attribute]) else None
+            except:
+                value = values[attribute]
+            setattr(self, attribute, value)
+
+    def __save__(self):
+        if not self.id:
+            db.session.add(self)
+        db.session.commit()
 
     def __repr__(self):
         return f'ResumenDocente({self.titulo_investigacion}, {self.convocatoria})'
 
     def __str__(self):
         return self.titulo_investigacion
+
+    @staticmethod
+    def __get_all__():
+        return Investigacion.query.all()
+
+    @staticmethod
+    def __get_by_id__(_id_):
+        return Investigacion.query.get(_id_)
+
+    @staticmethod
+    def __get_by_id_investigacion__(_id_investigacion_):
+        return Investigacion.query.filter(Investigacion.id_investigacion == int(_id_investigacion_)).one_or_none()
+
+    @staticmethod
+    def __get_all_by_tipo_resumen__(tipo):
+        return Investigacion.query.filter(Investigacion.tipo_resumen == tipo).all()
+
+    @staticmethod
+    def __get_corpus_lemas__():
+        columns = [Investigacion.id, Investigacion.id_investigacion, Investigacion.corpus_lemas]
+        return Investigacion.query.with_entities(*columns).all()
+
+    @classmethod
+    def __get_columns__(cls):
+        return [i for i in cls.__dict__.keys() if not i.startswith('_') or i == 'id']

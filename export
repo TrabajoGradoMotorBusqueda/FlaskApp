@@ -1,5 +1,0 @@
-export FLASK_APP=main.py
-export APP_SETTINGS_MODULE=config.local
-export SQLALCHEMY_TRACK_MODIFICATIONS=false
-export FLASK_DEBUG=true
-export FLASK_ENV=development

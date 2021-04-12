@@ -1,12 +1,9 @@
 import pandas as pd
 import re
-from models import Investigacion
+from app.models import Investigacion
+from main import BASE_DIR
 
-resumenes_docentes = pd.read_excel("./data/Resumenes.xlsx", sheet_name="Proyectos Docentes")
-resumenes_estudiantes = pd.read_excel("./data/Resumenes.xlsx", sheet_name="studiantiles y Trabajos de G")
-
-columnas_resumenes = [column for column in dir(Investigacion)
-                      if not (column.startswith('_') or column == 'metadata' or column == 'id')]
+columnas_resumenes = Investigacion.__get_columns__()
 
 
 def all_in_one_row_5_columns(df, col1, col2, col3, col4, col5):
@@ -118,7 +115,7 @@ def ordenamiento_datos(dataset):
 def completado_numero_registros(dataset):
     def wrapper(*args, **kargs):
         df = dataset(*args, **kargs)
-        nac = 1 # Numero actual
+        nac = 1  # Numero actual
         for index, row in df.iterrows():
             if pd.isnull(row['no']):
                 df.loc[index, 'no'] = nac
@@ -176,11 +173,10 @@ def estructura_dataset(df):
     return df
 
 
-# if __name__ == '__main__':
-# resumenes_docentes = estructura_dataset(resumenes_docentes)
-# resumenes_estudiantes = estructura_dataset(resumenes_estudiantes)
-#
-# resumenes_docentes.to_csv('./data/Resumenes_Docentes.csv')
-# resumenes_estudiantes.to_csv('./data/Resumenes_Estudiantes.csv')
-# print('finish')
+def leer_resumenes():
+    resumenes_docentes = pd.read_excel(BASE_DIR / 'FILES/resumenes/Resumenes.xlsx',
+                                       sheet_name="Proyectos Docentes")
+    resumenes_estudiantes = pd.read_excel(BASE_DIR / 'FILES/resumenes/Resumenes.xlsx',
+                                          sheet_name="studiantiles y Trabajos de G")
 
+    return resumenes_docentes, resumenes_estudiantes

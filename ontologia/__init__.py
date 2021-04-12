@@ -10,7 +10,7 @@ onto_path.append(this_folder + "/Data")
 # carga de ontologia por IRI o por ruta directa al archivo owl
 
 ontologia = get_ontology(
-    "http://www.semanticweb.org/OntologiaInvestigacionPrueba").load()
+    "http://www.semanticweb.org/OntologiaInvestigacion").load()
 
 with ontologia:
     class Grupo_investigacion(Thing):

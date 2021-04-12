@@ -1,11 +1,9 @@
-from gensim.test.utils import datapath
 from gensim import utils
 from gensim.models.doc2vec import Doc2Vec, TaggedDocument
 import multiprocessing
 from time import time
 
-from db import session
-from models import Investigacion
+from app.models import Investigacion
 
 
 class ModeloD2V:
@@ -41,19 +39,10 @@ class ModeloD2V:
 
 
 class Corpus(object):
-    corpus_investigaciones = session.query(Investigacion.id,
-                                           Investigacion.id_investigacion,
-                                           Investigacion.corpus_lemas).all()
+    corpus_investigaciones = Investigacion.__get_corpus_lemas__()
     corpus_investigaciones = sorted(corpus_investigaciones, key=lambda item: item[0])
 
     def __iter__(self):
         for corpus in self.corpus_investigaciones:
-            # assume there's one document per line, tokens separated by whitespace
-            # normalizar = str.maketrans('áéíóúü', 'aeiouu')
             palabras = utils.simple_preprocess(corpus.corpus_lemas)
             yield TaggedDocument(palabras, [corpus.id, corpus.id_investigacion])
-
-
-modelo = ModeloD2V(Corpus())
-modelo.d2v.save("./modeloD2V.model")
-print(modelo.d2v.wv.most_similar(['inteligencia']))

@@ -1,9 +1,8 @@
 import re
 from abc import abstractmethod, ABC
 
-from db import session
-from models import Investigacion, DiccionarioLema
-import instancias as onto
+from app.models import Investigacion, DiccionarioLema
+from . import instancias as onto
 
 
 def filtered_columns(column, investigacion, atributos):
@@ -238,10 +237,11 @@ class InvestigacionOntologia(ABC):
     def instanciar_palabras(self):
         vocabulario = set(self.investigacion.corpus_lemas.split())
 
-        for lema in vocabulario:
-            descripciones = session.query(DiccionarioLema.palabras). \
-                filter(DiccionarioLema.lema == lema).one_or_none()
-            palabra_instancia = onto.instanciar_palabra(lema, descripciones.palabras)
+        for lema_palabra in vocabulario:
+            lema = DiccionarioLema.get_by_lema(lema_palabra)
+            if lema is None:
+                print(lema_palabra)
+            palabra_instancia = onto.instanciar_palabra(lema.lema, lema.palabras)
             self.palabras.append(palabra_instancia)
 
     def relacionar(self, asesor=None, departamento=None):
@@ -386,8 +386,7 @@ class InvestigacionEstudiante(InvestigacionOntologia):
 class Query(ABC, object):
 
     def __init__(self, tipo, nombre_universidad, nombre_viis):
-        investigaciones = session.query(Investigacion). \
-            filter(Investigacion.tipo_resumen == tipo).all()
+        investigaciones = Investigacion.__get_all_by_tipo_resumen__(tipo)
         self.investigaciones = sorted(investigaciones, key=lambda item: item.id)
         self.universidad_ontologia = UniversidadOntologia(nombre_universidad, nombre_viis)
 
@@ -433,7 +432,8 @@ class InstanciarInvestigacionesEstudiantes(Query):
         onto.ontologia.save()
 
 
-if __name__ == '__main__':
+def iniciar_instancia_ontologia():
+    print('Start with docentes')
     instanciar_docentes = InstanciarInvestigacionesDocente(
         "Universidad de Nariño",
         "Vicerrectoría de Investigación e Interacción Social")
