@@ -1,11 +1,10 @@
 from owlready2 import *
-import os
+from main import BASE_DIR
 
-this_folder = os.path.dirname(os.path.abspath(__file__))
 
 # agregar la carpeta que contiene la ontologia,
 # para busqueda local, sino en internet
-onto_path.append(this_folder + "/Data")
+onto_path.append(BASE_DIR / 'ontologia/Data')
 
 # carga de ontologia por IRI o por ruta directa al archivo owl
 

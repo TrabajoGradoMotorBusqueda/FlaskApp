@@ -1,13 +1,22 @@
 import difflib
-from . import elasticsearch, root_folder
+from . import elasticsearch
+from main import BASE_DIR
+from app.models import DiccionarioLema
 
 # Lectura de lemas
 import json
 
-with open(root_folder+'/vocabulario/diccionario-lemas.json', 'r') as f:
+with open(BASE_DIR / 'uimi/vocabulario/diccionario-lemas.json', 'r') as f:
     diccionario_lemas = json.loads(f.read())
 
+# TODO: Cambiar por consulta en DB
+# lemas = DiccionarioLema.get_lemas()
+
+
 def palabras_similares(palabras):
+    # TODO: limpiar palabras y traer lemas palabras a sus lemas
+    # TODO: Manejar Palabras de Nombres de Autores
+
     # Llegan las palabras
     palabras = palabras.split()
 

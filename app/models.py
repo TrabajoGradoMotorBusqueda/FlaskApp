@@ -33,6 +33,10 @@ class DiccionarioLema(db.Model):
     def get_by_lema(lema):
         return DiccionarioLema.query.get(lema)
 
+    @staticmethod
+    def get_lemas():
+        return DiccionarioLema.query.with_entities(DiccionarioLema.lema).all()
+
 
 class Investigacion(db.Model):
     __tablename__ = 'resumenes_investigacion'

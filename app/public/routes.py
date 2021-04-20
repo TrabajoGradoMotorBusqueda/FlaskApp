@@ -25,10 +25,10 @@ def index():
 
     if search_form.validate_on_submit():
         query = search_form.searchbar.data
-        if query == 'fixmi':
-            import fixmi
-            fixmi.iniciar_fixmi()
-            return "YAAAA"
+        # if query == 'fixmi':
+        #     import fixmi
+        #     fixmi.iniciar_fixmi()
+        #     return "YAAAA"
         return redirect(url_for('public.busqueda', query=query))
 
     return render_template('public/index.html', **context)

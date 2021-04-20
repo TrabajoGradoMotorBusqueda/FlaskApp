@@ -239,8 +239,6 @@ class InvestigacionOntologia(ABC):
 
         for lema_palabra in vocabulario:
             lema = DiccionarioLema.get_by_lema(lema_palabra)
-            if lema is None:
-                print(lema_palabra)
             palabra_instancia = onto.instanciar_palabra(lema.lema, lema.palabras)
             self.palabras.append(palabra_instancia)
 
@@ -424,7 +422,6 @@ class InstanciarInvestigacionesEstudiantes(Query):
     def instanciar(self):
         for investigacion in self.investigaciones:
             print(investigacion.id)
-            # if investigacion.id == 386:
             investigacion_estudiante = InvestigacionEstudiante(investigacion, self.universidad_ontologia)
             investigacion_estudiante.instanciar()
             investigacion_estudiante.instanciar_palabras()

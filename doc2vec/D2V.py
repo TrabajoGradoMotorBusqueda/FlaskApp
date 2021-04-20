@@ -2,6 +2,7 @@ from gensim import utils
 from gensim.models.doc2vec import Doc2Vec, TaggedDocument
 import multiprocessing
 from time import time
+from main import BASE_DIR
 
 from app.models import Investigacion
 
@@ -25,7 +26,7 @@ class ModeloD2V:
                   epochs=150,  # Epocas, valores altos sobreentreno )?
                   )
 
-    def __init__(self, corpus):
+    def __init__(self, corpus=None):
         # Entrenamiento del modelo
         t = time()
         self.d2v.build_vocab(corpus,  # Oraciones nuevas

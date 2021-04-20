@@ -1,7 +1,7 @@
 from collections import Counter
 from itertools import chain
 
-from ontologia import ontologia
+from . import ontologia
 
 
 def ranking_documentos_ontologia(palabras):
