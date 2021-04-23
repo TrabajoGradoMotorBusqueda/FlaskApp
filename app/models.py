@@ -35,7 +35,8 @@ class DiccionarioLema(db.Model):
 
     @staticmethod
     def get_lemas():
-        return DiccionarioLema.query.with_entities(DiccionarioLema.lema).all()
+        lemas = DiccionarioLema.query.with_entities(DiccionarioLema.lema).all()
+        return [lema[0] for lema in lemas]
 
 
 class Investigacion(db.Model):

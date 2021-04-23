@@ -90,7 +90,6 @@ def datos_adicionales(dataset):
 
 
 def ordenamiento_datos(dataset):
-    # TODO: codigo base para construir corpus, ontologia
     def wrapper(*args, **kargs):
         df = dataset(*args, **kargs)
         columns = ['palabra', 'codigo', 'nombres', 'asesor', 'programa', 'facultad', 'grupo', 'linea', 'departamento']
