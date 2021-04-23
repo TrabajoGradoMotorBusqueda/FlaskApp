@@ -73,7 +73,7 @@ def corpus_original(campos):
 
 def limpieza_corpus(corpus_inicial):
     def wrapper(*args, **kwargs):
-        corpus = corpus_inicial(*args, **kwargs)
+        corpus = corpus_inicial(*args, **kwargs) if callable(corpus_inicial) else corpus_inicial
         palabras_limpias = clean_text(corpus)
         palabras_limpias = [palabra for palabra in palabras_limpias
                             if palabra not in stopwords and len(palabra) > 2]
