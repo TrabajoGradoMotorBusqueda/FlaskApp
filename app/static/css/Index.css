@@ -1,0 +1,25 @@
+#search-body{
+  margin: 150px 100px 0;
+}
+
+#logo-buscador{
+  text-align: center;
+}
+#logo-buscador>img{
+    width: 150px;
+}
+
+#search-bar{
+  margin-top: 25px;
+}
+
+.form-control-borderless {
+  border: none;
+}
+
+.form-control-borderless:hover, .form-control-borderless:active, .form-control-borderless:focus {
+  border: none;
+  outline: none;
+  box-shadow: none;
+}
+

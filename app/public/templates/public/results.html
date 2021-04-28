@@ -1,0 +1,131 @@
+{% extends 'base.html' %}
+{% from 'bootstrap/form.html' import render_form, render_field %}
+
+{% block styles %}
+    {{ super() }}
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/Results.css')}}">
+{% endblock %}
+
+
+{%block navbar%}
+    {% include 'navbar-results.html' %}
+{% endblock%}
+
+{% block content %}
+nada
+    <div class="modal fade" role="dialog" tabindex="-1" id="testmodal">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title">Modal Title</h4><button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
+                </div>
+                <div class="modal-body">
+                    <p>The content of your modal.</p>
+                </div>
+                <div class="modal-footer"><button class="btn btn-light" type="button" data-dismiss="modal">Close</button><button class="btn btn-primary" type="button">Save</button></div>
+            </div>
+        </div>
+    </div>
+    <div id="container-results" class="container">
+        <div id="row-results" class="row">
+            <div id="col-result" class="col-md-4 d-flex justify-content-center">
+                <div id="card-result" class="card">
+                    <div id="card-result-title">
+                        <h5 class="text-center">Diagnóstico del impacto de las iniciativas emprendedoras de los egresados del programa de diseño industrial de la Universidad de Nariño</h5>
+                    </div>
+                    <div id="card-result-data" class="card-body d-flex flex-column">
+                        <div id="card-authors">
+                            <!--<h6 class="text-muted mb-2">Autores</h6>-->
+                            <h6 class="mb-2">Autores</h6>
+                            <p>- David Santiago Pinchao Ortiz<br>- DOyoung de NCT<br></p>
+                        </div>
+                        <div id="card-program" >
+                            <h6 class="mb-2">Programa</h6>
+                            <p>Ingenieria de sistemas</p>
+                        </div>
+                        <div id="card-keywords">
+                            <h6 class="mb-2">Palabras Clave</h6>
+                            <p>Palabra Clave 1 - Palabra Clave - Palabra Clave 3 - Palabra Clave 4 - Palabra Clave 5.</p>
+                        </div>
+                        <a id="card-show" class="card-link align-self-center" data-bss-hover-animate="pulse" href="#" data-toggle="modal" data-target="#testmodal">
+                            Ver más
+                        </a>
+                    </div>
+                </div>
+            </div>
+            <div id="col-result" class="col-md-4 d-flex justify-content-center">
+                <div id="card-result" class="card">
+                    <div id="card-result-title">
+                        <h5 class="text-center">Diagnóstico del impacto de las iniciativas emprendedoras de los egresados del programa de diseño industrial de la Universidad de Nariño</h5>
+                    </div>
+                    <div id="card-result-data" class="card-body d-flex flex-column">
+                        <div id="card-authors">
+                            <h6 class="text-muted mb-2">Autores</h6>
+                            <p>- David Santiago Pinchao Ortiz<br>- DOyoung de NCT<br></p>
+                        </div>
+                        <div id="card-program" >
+                            <h6 class="text-muted mb-2">Programa</h6>
+                            <p>Ingenieria de sistemas</p>
+                        </div>
+                        <div id="card-keywords">
+                            <h6 class="text-muted mb-2">Palabras Clave</h6>
+                            <p>Palabra Clave 1 - Palabra Clave - Palabra Clave 3 - Palabra Clave 4 - Palabra Clave 5.</p>
+                        </div>
+                        <a id="card-show" class="card-link align-self-center" data-bss-hover-animate="pulse" href="#" data-toggle="modal" data-target="#testmodal">
+                            Ver más
+                        </a>
+                    </div>
+                </div>
+            </div>
+            <div id="col-result" class="col-md-4 d-flex justify-content-center">
+                <div id="card-result" class="card">
+                    <div id="card-result-title">
+                        <h5 class="text-center">Diagnóstico del impacto de las iniciativas emprendedoras de los egresados del programa de diseño industrial de la Universidad de Nariño</h5>
+                    </div>
+                    <div id="card-result-data" class="card-body d-flex flex-column">
+                        <div id="card-authors">
+                            <h6 class="text-muted mb-2">Autores</h6>
+                            <p>- David Santiago Pinchao Ortiz<br>- DOyoung de NCT<br></p>
+                        </div>
+                        <div id="card-program" >
+                            <h6 class="text-muted mb-2">Programa</h6>
+                            <p>Ingenieria de sistemas</p>
+                        </div>
+                        <div id="card-keywords">
+                            <h6 class="text-muted mb-2">Palabras Clave</h6>
+                            <p>Palabra Clave 1 - Palabra Clave - Palabra Clave 3 - Palabra Clave 4 - Palabra Clave 5.</p>
+                        </div>
+                        <a id="card-show" data-bss-hover-animate="pulse" class="card-link align-self-center" href="#" data-toggle="modal" data-target="#testmodal">
+                            Ver más
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row" style="margin-top: 40px;">
+            <div class="col">
+                <nav class="d-flex justify-content-center">
+                    <ul class="pagination">
+                        <li class="page-item"><a class="page-link" href="#" aria-label="Previous"><span aria-hidden="true">«</span></a></li>
+                        <li class="page-item"><a class="page-link" href="#">1</a></li>
+                        <li class="page-item"><a class="page-link" href="#">2</a></li>
+                        <li class="page-item"><a class="page-link" href="#">3</a></li>
+                        <li class="page-item"><a class="page-link" href="#" aria-label="Next"><span aria-hidden="true">»</span></a></li>
+                    </ul>
+                </nav>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+
+{% block scripts %}
+    {{ super() }}
+    <script src="{{ url_for('static', filename='js/resultados.js')}}"></script>
+    <script>
+        data = JSON.parse({{ resultados | tojson | safe }})
+        load_results(data);
+    </script>
+{% endblock %}
+
+
+
