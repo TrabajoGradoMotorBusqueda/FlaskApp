@@ -95,6 +95,7 @@ class Investigacion(db.Model):
     corpus = db.Column(db.Text)
     corpus_palabras = db.Column(db.Text)
     corpus_lemas = db.Column(db.Text)
+    corpus_lemas_autores = db.Column(db.Text)
 
     def __init__(self, values=None):
         if values is None:

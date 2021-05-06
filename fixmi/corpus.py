@@ -5,6 +5,7 @@ stopwords = ["de", "la", "que", "el", "en", "y", "a", "los", "del", "se", "las",
 columns = ['palabra', 'facultad', 'programa', 'grupo', 'linea']
 data = {}
 
+normalizar = str.maketrans('áéíóúüàèìòù', 'aeiouuaeiou')
 
 def clean_text(text):
     """Make text lowercase,
@@ -29,7 +30,7 @@ def clean_text(text):
     return resultado
 
 
-def filtered_columns(column):
+def filtered_columns(column, nombres=False):
     regex = re.compile(column)
     filtered = list(filter(regex.match, data.keys()))
     values = []
@@ -38,7 +39,7 @@ def filtered_columns(column):
         if value is not None:
             values.append(value)
 
-    return set(values)
+    return set(values) if not nombres else values
 
 
 def corpus_original(campos):
@@ -67,19 +68,30 @@ def corpus_original(campos):
             " ".join(linea_investigacion) + " " + \
             tipo_convocatoria
 
-        return corpus
+        nombres = filtered_columns('nombres', True)
+        apellidos = filtered_columns('apellidos', True)
+        asesores = filtered_columns('asesor', True)
+
+        # Trayendo nombres de autores
+        autores = ""
+        for nombre, apellido in zip(nombres, apellidos):
+            autores += " " + nombre + " " + apellido
+
+        autores += " " + " ".join(asesores)
+
+        return corpus, autores.translate(normalizar).lower()
     return wrapper
 
 
 def limpieza_corpus(corpus_inicial):
     def wrapper(*args, **kwargs):
-        corpus = corpus_inicial(*args, **kwargs) if callable(corpus_inicial) else corpus_inicial
+        corpus, autores = corpus_inicial(*args, **kwargs) if callable(corpus_inicial) else corpus_inicial, ""
         palabras_limpias = clean_text(corpus)
         palabras_limpias = [palabra for palabra in palabras_limpias
                             if palabra not in stopwords and len(palabra) > 2]
 
         corpus_limpio = ' '.join(palabras_limpias)
-        return corpus, corpus_limpio
+        return corpus, corpus_limpio, autores
     return wrapper
 
 

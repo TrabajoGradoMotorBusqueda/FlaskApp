@@ -24,14 +24,14 @@ def construir_corpus():
     investigaciones = tuple(Investigacion.__get_all__())
     for investigacion in investigaciones:
         print(investigacion.id)
-        corpus, corpus_limpio = construccion_corpus(**vars(investigacion))
+        corpus, corpus_limpio, autores = construccion_corpus(**vars(investigacion))
         corpus_lemas = lematizar_corpus(corpus_limpio)
         investigacion.corpus = corpus
         investigacion.corpus_palabras = corpus_limpio
         investigacion.corpus_lemas = corpus_lemas
+        investigacion.corpus_lemas_autores = corpus_lemas + " " + autores
         investigacion.__save__()
         print('Investigacion: ' + str(investigacion.id) + ' Completo')
-
     print('Corpus Añadidos !')
 
     import json
