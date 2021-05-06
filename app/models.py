@@ -143,6 +143,11 @@ class Investigacion(db.Model):
         columns = [Investigacion.id, Investigacion.id_investigacion, Investigacion.corpus_lemas]
         return Investigacion.query.with_entities(*columns).all()
 
+    @staticmethod
+    def __get_corpus_lemas_autores__():
+        columns = [Investigacion.id, Investigacion.id_investigacion, Investigacion.corpus_lemas_autores]
+        return Investigacion.query.with_entities(*columns).all()
+
     @classmethod
     def __get_columns__(cls):
         return [i for i in cls.__dict__.keys() if not i.startswith('_') or i == 'id']
