@@ -5,6 +5,9 @@ from app.models import Investigacion, DiccionarioLema
 from . import instancias as onto
 
 
+normalizar = str.maketrans('áéíóúüàèìòù', 'aeiouuaeiou')
+
+
 def filtered_columns(column, investigacion, atributos):
     regex = re.compile(column)
     filtered = list(filter(regex.match, atributos))
@@ -84,10 +87,12 @@ class InvestigacionOntologia(ABC):
         self.proyecto_investigacion = proyecto_investigacion
 
         # Instancias Palabras ( Tipo Convocatoria, Estado Convocatoria)
-        palabra_tipo_convocatoria = [onto.instanciar_palabra(tipo.lower(), [tipo.lower()])]
-        palabra_estado = [onto.instanciar_palabra(palabra.lower(), [palabra.lower()])
+        # palabra_tipo_convocatoria = [onto.instanciar_palabra(tipo.lower(), [tipo.lower()])]
+        # TODO: Estado Investigacion
+        palabra_estado = [onto.instanciar_palabra(palabra.translate(normalizar).lower(),
+                                                  [palabra.translate(normalizar).lower()])
                           for palabra in estado.split() if len(palabra) > 2]
-        palabras.extend(palabra_tipo_convocatoria + palabra_estado)
+        palabras.extend(palabra_estado)
 
         # Instanciar Convocatoria
         nombre_convocatoria = self.investigacion.convocatoria
@@ -106,10 +111,11 @@ class InvestigacionOntologia(ABC):
         self.convocatoria = convocatoria_instancia
         # Agregamos las palabras de convocatoria a la Ontologia
         if nombre_convocatoria != "Ninguna":
-            palabra_tipo = [onto.instanciar_palabra(palabra.lower(), [palabra.lower()])
-                            for palabra in tipo_convocatoria.split()]
+            # TODO: Convovatoria Año
+            # palabra_tipo = [onto.instanciar_palabra(palabra.lower(), [palabra.lower()])
+            #                 for palabra in tipo_convocatoria.split()]
             palabra_anio = [onto.instanciar_palabra(str(tipo_convocatoria), [str(tipo_convocatoria)])]
-            palabras.extend(palabra_tipo + palabra_anio)
+            palabras.extend(palabra_anio)
 
         # Datos de Estudiantes
         codigos = filtered_columns('codigo', self.investigacion, atributos)
@@ -157,10 +163,13 @@ class InvestigacionOntologia(ABC):
             # Agregar estudiante al objeto
             self.investigadores.append(investigador_instancia)
 
+            # TODO: Remover tildes y normalizar descripciones
             # Instancias para Palabras, nombres y apellidos
-            palabra_nombres = [onto.instanciar_palabra(palabra.lower(), [palabra])
+            palabra_nombres = [onto.instanciar_palabra(palabra.translate(normalizar).lower(),
+                                                       [palabra.translate(normalizar).lower(), palabra])
                                for palabra in nombre.split()]
-            palabra_apellidos = [onto.instanciar_palabra(palabra.lower(), [palabra.lower()])
+            palabra_apellidos = [onto.instanciar_palabra(palabra.translate(normalizar).lower(),
+                                                         [palabra.translate(normalizar).lower(), palabra])
                                  for palabra in apellido.split()]
             palabras.extend(palabra_nombres + palabra_apellidos)
 
@@ -176,7 +185,9 @@ class InvestigacionOntologia(ABC):
                     self.asesores.append(asesor_instancia)
 
                     # Instancias para Palabras, nombres y apellidos
-                    palabra_asesor = [onto.instanciar_palabra(palabra.lower(), [palabra])
+                    # TODO: ASESORES Nombre
+                    palabra_asesor = [onto.instanciar_palabra(palabra.translate(normalizar).lower(),
+                                                              [palabra.translate(normalizar).lower(), palabra])
                                       for palabra in asesor_nombre.split()]
                     palabras.extend(palabra_asesor)
 
