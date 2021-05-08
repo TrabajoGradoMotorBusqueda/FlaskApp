@@ -9,7 +9,7 @@ from flask import redirect
 
 from . import public_bp
 
-import uimi
+from uimi import search_engine
 
 from json import dumps
 
@@ -26,7 +26,7 @@ def index():
     if search_form.validate_on_submit():
         query = search_form.searchbar.data
         # if query == 'fixmi':
-        #     import fixmi
+        #     # import fixmi
         #     fixmi.iniciar_fixmi()
         #     return "YAAAA"
         return redirect(url_for('public.busqueda', query=query))
@@ -36,7 +36,7 @@ def index():
 
 @public_bp.route('/busqueda/<query>', methods=['GET'])
 def busqueda(query):
-    resultados = uimi.search_engine(query)
+    resultados = search_engine(query)
     resultados = construir_resultados(resultados)
     # print(resultados)
     # for i in range(len(resultados)):
