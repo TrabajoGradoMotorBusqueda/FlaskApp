@@ -5,22 +5,17 @@ from app.models import DiccionarioLema
 from fixmi import corpus as clean
 import re
 # Palabras Recomendadas
-from doc2vec import cargar_modelo
-
+from doc2vec import modelo
 # from . import elasticsearch
 
-
 lemas = None
-modelo = None
+# modelo = None
 regex = re.compile(r'\d+')
 
 
 def palabras_similares(palabras):
     global lemas
-    lemas = lemas or DiccionarioLema.get_lemas()
-
-    global modelo
-    modelo = modelo or cargar_modelo()
+    lemas = DiccionarioLema.get_lemas()
 
     # Numeros
     palabras_numeros = regex.findall(palabras)

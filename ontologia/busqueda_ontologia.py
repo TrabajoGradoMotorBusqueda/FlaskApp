@@ -32,7 +32,7 @@ def busqueda_lista_documentos(docs_id):
 
     # Buscamos documentos que tengan esas palabras
     for doc in docs_id:
-        documento = ontologia.search(id_proyecto_investigacion=doc)
+        documento = ontologia.search(id_proyecto_investigacion=int(doc))
         documentos.append(documento[0])
 
     return documentos
