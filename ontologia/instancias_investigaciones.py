@@ -5,7 +5,7 @@ from app.models import Investigacion, DiccionarioLema
 from . import instancias as onto
 
 
-normalizar = str.maketrans('áéíóúüàèìòù', 'aeiouuaeiou')
+from helpers import normalizar
 
 
 def filtered_columns(column, investigacion, atributos):

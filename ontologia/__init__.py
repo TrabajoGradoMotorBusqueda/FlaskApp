@@ -4,7 +4,7 @@ from main import BASE_DIR
 
 # agregar la carpeta que contiene la ontologia,
 # para busqueda local, sino en internet
-onto_path.append(BASE_DIR / 'ontologia/Data')
+onto_path.append(BASE_DIR / 'FILES/ontologia')
 
 # carga de ontologia por IRI o por ruta directa al archivo owl
 

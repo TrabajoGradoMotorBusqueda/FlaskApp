@@ -13,6 +13,9 @@ def ranking_documentos_ontologia(palabras):
         instancia = ontologia.search(descripcion_palabra=palabra)
         instancias_palabras.extend(instancia)
 
+    if len(instancias_palabras) == 0:
+        return None, None
+
     for instancia in instancias_palabras:
         for documento in instancia.palabra_describe_pi:
             documentos.append(documento)

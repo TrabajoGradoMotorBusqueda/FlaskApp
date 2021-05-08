@@ -1,12 +1,18 @@
+# Diccionario de Lemas
 import difflib
-from . import elasticsearch
 from app.models import DiccionarioLema
+# Limpieza de Busqueda
 from fixmi import corpus as clean
+import re
+# Palabras Recomendadas
 from doc2vec import cargar_modelo
+
+# from . import elasticsearch
 
 
 lemas = None
 modelo = None
+regex = re.compile(r'\d+')
 
 
 def palabras_similares(palabras):
@@ -16,42 +22,29 @@ def palabras_similares(palabras):
     global modelo
     modelo = modelo or cargar_modelo()
 
+    # Numeros
+    palabras_numeros = regex.findall(palabras)
     # limpiar palabras
-    _, palabras_limpias, _ = clean.limpieza_corpus(palabras)()
+    palabras_limpias = clean.limpieza_corpus(palabras)()
 
-    # Lema de Palabra para buscar
+    # Palabras para encontrar recomendaciones en w2v
+    palabras_w2v = []
+    # Palabras a buscar en la ontologia
     palabras_busqueda = []
-    palabras_busqueda_w2v = []
-    # Nombres de Autores
-    palabras_nombres = []
-    # Palabras en plural o muy similares
-    palabras_adicionales = []
-    for palabra in palabras_limpias.split():
+    for palabra in palabras_limpias:
         adicionales = difflib.get_close_matches(palabra, lemas, n=5, cutoff=0.90)
         if len(adicionales) != 0:
-            palabras_busqueda_w2v.append(palabra)
-            palabras_adicionales.extend(adicionales)
-            # palabras_busqueda.append(adicionales[0])
-            # palabras_adicionales.extend(adicionales[1:])
+            palabras_w2v.append(palabra)
+            palabras_busqueda.extend(adicionales)
         elif palabra in modelo.wv.vocab:
-            palabras_busqueda_w2v.append(palabra)
-        else:
-            palabras_busqueda.append(palabra)
-            # palabras_nombres.append(palabra)
+            palabras_w2v.append(palabra)
 
+    if len(palabras_w2v) == 0:
+        return palabras_limpias
     # Llegan las palabras
-    # palabras = palabras.split()
-    palabras_relacionadas = modelo.wv.most_similar(palabras_busqueda_w2v, topn=50)
-    palabras_adicionales.extend([similar[0] for similar in palabras_relacionadas])
-    # palabras_busqueda_w2v.extend(palabras_adicionales)
+    # palabras_relacionadas = elasticsearch.most_similar_words(palabras_busqueda) # Implementacion w2v in ElasticSearch
+    palabras_recomendaciones = modelo.wv.most_similar(palabras_w2v, topn=50)
+    palabras_busqueda.extend([similar[0] for similar in palabras_recomendaciones])
+    palabras_busqueda.extend(palabras_numeros)
 
-    # if len(palabras_nombres) == 0 or len(palabras_adicionales) > 0:
-    #     palabras_relacionadas = elasticsearch.most_similar_words(palabras_busqueda)
-    #     # Agregamos palabras
-    #     palabras_relacionadas.extend(palabras_adicionales)
-    #     palabras_relacionadas.extend(palabras_nombres)
-    # else:
-    #     palabras_busqueda.extend(palabras_nombres)
-    #     return palabras_busqueda
-
-    return palabras_adicionales
+    return palabras_busqueda, palabras_limpias

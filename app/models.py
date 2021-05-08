@@ -143,12 +143,12 @@ class Investigacion(db.Model):
 
     @staticmethod
     def __get_corpus_lemas__():
-        columns = [Investigacion.id, Investigacion.id_investigacion, Investigacion.corpus_lemas]
+        columns = [Investigacion.id, Investigacion.corpus_lemas]
         return Investigacion.query.with_entities(*columns).all()
 
     @staticmethod
     def __get_corpus_lemas_autores__():
-        columns = [Investigacion.id, Investigacion.id_investigacion, Investigacion.corpus_lemas_autores]
+        columns = [Investigacion.id, Investigacion.corpus_lemas_autores]
         return Investigacion.query.with_entities(*columns).all()
 
     @classmethod

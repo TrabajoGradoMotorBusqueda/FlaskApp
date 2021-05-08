@@ -1,8 +1,7 @@
 from ontologia import *
 import re
 
-normalizar = str.maketrans('áéíóúüàèìòù', 'aeiouuaeiou')
-
+from helpers import normalizar
 
 def normalizar_nombre(string):
     string = re.sub(r'[^\w\s]', '', string)

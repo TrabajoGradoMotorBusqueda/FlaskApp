@@ -12,6 +12,7 @@ from gensim.models.doc2vec import Doc2Vec, TaggedDocument
 
 modelo = None
 
+
 class Corpus(object):
     def __init__(self, autores=False):
         self.corpus_autores = autores
@@ -27,7 +28,7 @@ class Corpus(object):
             else:
                 palabras = utils.simple_preprocess(corpus.corpus_lemas_autores)
 
-            yield TaggedDocument(palabras, [corpus.id, corpus.id_investigacion])
+            yield TaggedDocument(palabras, [corpus.id])
 
 
 def entrenamiento_d2v(autores=False):
@@ -73,7 +74,7 @@ def cargar_modelo():
     global modelo
     try:
         modelo = Doc2Vec.load(str(BASE_DIR / "FILES/modelos/modeloD2V_autores.model"))
-        modelo.wv.init_sims()
+        # modelo.wv.init_sims()
         return modelo
     except:
         return None
