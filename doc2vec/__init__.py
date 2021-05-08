@@ -30,11 +30,12 @@ class Corpus(object):
             yield TaggedDocument(palabras, [corpus.id, corpus.id_investigacion])
 
 
-def entrenamiento_d2v(corpus):
+def entrenamiento_d2v(autores=False):
+    corpus = Corpus(autores)
     d2v = Doc2Vec(vector_size=300,  # Dimensionalidad Palabras Vector
                   window=5,  # Contexto, distancia entre palabras predichas
                   min_count=1,  # Minimo de palabras a buscar
-                  workers=multiprocessing.cpu_count(),  # En mi CPU
+                  workers=2,  # En mi CPU
                   dm=0,  # Usamos el Modelo PV-DBOW analogo a SkipGram
                   dbow_words=1,  # Entrenar el skip gram y documentos
                   hs=0,  # Cero para negative sampling, castigo a neurona
@@ -58,7 +59,10 @@ def entrenamiento_d2v(corpus):
     t = time()
     d2v.train(corpus, total_examples=d2v.corpus_count, epochs=d2v.epochs, report_delay=3)
     print('Time to train the model: {} mins'.format(round((time() - t) / 60, 2)))
-    d2v.save(str(BASE_DIR / "FILES/modelos/modeloD2V.model"))
+    if not autores:
+        d2v.save(str(BASE_DIR / "FILES/modelos/modeloD2V.model"))
+    else:
+        d2v.save(str(BASE_DIR / "FILES/modelos/modeloD2V_autores.model"))
     print(d2v.wv.most_similar(['inteligencia']))
     global modelo
     modelo = d2v
@@ -68,7 +72,7 @@ def entrenamiento_d2v(corpus):
 def cargar_modelo():
     global modelo
     try:
-        modelo = Doc2Vec.load(str(BASE_DIR / "FILES/modelos/modeloD2V.model"))
+        modelo = Doc2Vec.load(str(BASE_DIR / "FILES/modelos/modeloD2V_autores.model"))
         modelo.wv.init_sims()
         return modelo
     except:

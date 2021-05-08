@@ -104,12 +104,15 @@ class Investigacion(db.Model):
             self.__attributes_setter__(values)
 
     def __attributes_setter__(self, values):
+        if self.id is not None:
+            del values['id']
         for attribute in values.keys():
             try:
                 value = int(values[attribute]) if not nan(values[attribute]) else None
             except:
                 value = values[attribute]
             setattr(self, attribute, value)
+
 
     def __save__(self):
         if not self.id:

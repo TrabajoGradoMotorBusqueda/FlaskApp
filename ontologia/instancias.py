@@ -1,10 +1,13 @@
 from ontologia import *
 import re
 
+normalizar = str.maketrans('áéíóúüàèìòù', 'aeiouuaeiou')
+
+
 def normalizar_nombre(string):
     string = re.sub(r'[^\w\s]', '', string)
     string_normalizada = string.replace(' ', '_')
-    return string_normalizada.lower()
+    return string_normalizada.translate(normalizar).lower()
 
 
 def instanciar_pi(id_proyecto_investigacion, titulo, resumen, palabras_clave, tipo, estado):
@@ -21,7 +24,7 @@ def instanciar_pi(id_proyecto_investigacion, titulo, resumen, palabras_clave, ti
 
 def instanciar_facultad(id_facultad, nombre_facultad):
     # Ojo recibe de parametro universidad
-    facultad = Facultad(normalizar_nombre("fac"+"_"+normalizar_nombre(nombre_facultad)))
+    facultad = Facultad(normalizar_nombre("fac" + "_" + normalizar_nombre(nombre_facultad)))
     facultad.set_id_facultad(id_facultad)
     facultad.set_nombre_facultad(nombre_facultad)
     return facultad
@@ -30,7 +33,7 @@ def instanciar_facultad(id_facultad, nombre_facultad):
 def instanciar_departamento(id_departamento, nombre_departamento):  # resumenes decentes no tiene el Depto
 
     # Ojo recibe de parametro facultad
-    departamento = Departamento("dep"+"_"+normalizar_nombre(nombre_departamento))
+    departamento = Departamento("dep" + "_" + normalizar_nombre(nombre_departamento))
     departamento.set_id_departamento(id_departamento)
     departamento.set_nombre_departamento(nombre_departamento)
     return departamento
@@ -38,7 +41,7 @@ def instanciar_departamento(id_departamento, nombre_departamento):  # resumenes 
 
 def instanciar_programa(id_programa, nombre_programa):
     # Parametro para Departamento
-    programa = Programa(normalizar_nombre("pro"+"_"+normalizar_nombre(nombre_programa)))
+    programa = Programa(normalizar_nombre("pro" + "_" + normalizar_nombre(nombre_programa)))
     programa.set_id_programa(id_programa)
     programa.set_nombre_programa(nombre_programa)
     return programa
@@ -46,7 +49,7 @@ def instanciar_programa(id_programa, nombre_programa):
 
 def instanciar_gi(id_grupo_investigacion, nombre_grupo_investigacion):
     # Ojo recibe de parametro Thing
-    gi = Grupo_investigacion("gi"+"_"+normalizar_nombre(nombre_grupo_investigacion))
+    gi = Grupo_investigacion("gi" + "_" + normalizar_nombre(nombre_grupo_investigacion))
     gi.set_id_grupo_investigacion(id_grupo_investigacion)
     gi.set_nombre_grupo_investigacion(nombre_grupo_investigacion)
     #     gi.set_clasificacion_grupo_investigacion(clasificacion_grupo_investigacion)
@@ -57,11 +60,11 @@ def instanciar_gi(id_grupo_investigacion, nombre_grupo_investigacion):
 
 def instanciar_li(id_linea_investigacion, nombre_linea_investigacion):
     # Ojo recibe de parametro Grupo-_investigacion
-    string = "li"+"_"+normalizar_nombre(nombre_linea_investigacion)
+    string = "li" + "_" + normalizar_nombre(nombre_linea_investigacion)
     if 'li_arte,_cultura_y_territorio' == string:
         print("pausaaa")
 
-    li = Linea_investigacion("li"+"_"+normalizar_nombre(nombre_linea_investigacion))
+    li = Linea_investigacion("li" + "_" + normalizar_nombre(nombre_linea_investigacion))
     li.set_id_linea_investigacion(id_linea_investigacion)
     li.set_nombre_linea_investigacion(nombre_linea_investigacion)
 

@@ -12,12 +12,12 @@ modelo = None
 
 
 def search_engine(palabras):
-    global modelo
-    if modelo is None:
-        # Gensim DOC2VEC
-        from doc2vec import cargar_modelo
-        # Modelo Doc2Vec
-        modelo = cargar_modelo()
+    # global modelo
+    # if modelo is None:
+    #     # Gensim DOC2VEC
+    #     from doc2vec import cargar_modelo
+    #     # Modelo Doc2Vec
+    #     modelo = cargar_modelo()
 
     # Busqueda Elastic Palabras similares
     palabras_relacionadas = palabras_similares(palabras)
@@ -27,9 +27,9 @@ def search_engine(palabras):
     # Busqueda Elastic Doc2Vec
     # id_documentos_d2v = elasticsearch.busqueda_d2v(modelo.infer_vector([' '.join(palabras)]),
     #                                               len(documentos_ontologia))
-
+    #
     # documentos_d2v = busqueda_lista_documentos(id_documentos_d2v)  # Documentos Restantes D2V
-
+    #
     # ranking_final_documentos = []
     # for ontologia_doc, d2v_doc in zip(documentos_ontologia, documentos_d2v):
     #     if ontologia_doc == d2v_doc:
@@ -40,3 +40,4 @@ def search_engine(palabras):
     #             ranking_final_documentos.append(d2v_doc)
 
     return documentos_ontologia
+    # return ranking_final_documentos

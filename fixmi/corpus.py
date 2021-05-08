@@ -5,7 +5,7 @@ stopwords = ["de", "la", "que", "el", "en", "y", "a", "los", "del", "se", "las",
 columns = ['palabra', 'facultad', 'programa', 'grupo', 'linea']
 data = {}
 
-normalizar = str.maketrans('áéíóúüàèìòù', 'aeiouuaeiou')
+normalizar = str.maketrans('áéíóúüàèìòùÁÉÍÓÚÜÀÈÌÒÙ', 'aeiouuaeiouaeiouuaeiou')
 
 def clean_text(text):
     """Make text lowercase,
@@ -78,6 +78,8 @@ def corpus_original(campos):
             autores += " " + nombre + " " + apellido
 
         autores += " " + " ".join(asesores)
+        autores = autores.lstrip()
+        autores = autores.rstrip()
 
         return corpus, autores.translate(normalizar).lower()
     return wrapper
@@ -85,13 +87,18 @@ def corpus_original(campos):
 
 def limpieza_corpus(corpus_inicial):
     def wrapper(*args, **kwargs):
-        corpus, autores = corpus_inicial(*args, **kwargs) if callable(corpus_inicial) else corpus_inicial, ""
-        palabras_limpias = clean_text(corpus)
+        if callable(corpus_inicial):
+            corpus = corpus_inicial(*args, **kwargs)
+            palabras_limpias = clean_text(corpus[0])
+        else:
+            corpus = corpus_inicial.translate(normalizar)
+            palabras_limpias = clean_text(corpus)
+
         palabras_limpias = [palabra for palabra in palabras_limpias
                             if palabra not in stopwords and len(palabra) > 2]
 
         corpus_limpio = ' '.join(palabras_limpias)
-        return corpus, corpus_limpio, autores
+        return corpus, corpus_limpio, corpus[1]
     return wrapper
 
 

@@ -12,7 +12,9 @@ def almacenar_resumen(resumenes, tipo_resumen):
             investigacion = Investigacion(resumen)  # Creamos el Objeto
         else:
             # Update Resumenes
-            investigacion.__attributes_setter__(resumen)
+            # resumen['tipo_resumen'] = tipo_resumen
+            investigacion.tipo_resumen = tipo_resumen
+            # investigacion.__attributes_setter__(resumen)
         investigacion.__save__()
 
     print('Base de datos con Resumenes' + tipo_resumen)
