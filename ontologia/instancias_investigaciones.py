@@ -433,6 +433,8 @@ class InstanciarInvestigacionesEstudiantes(Query):
     def instanciar(self):
         for investigacion in self.investigaciones:
             print(investigacion.id)
+            if investigacion.id != 386:
+                continue
             investigacion_estudiante = InvestigacionEstudiante(investigacion, self.universidad_ontologia)
             investigacion_estudiante.instanciar()
             investigacion_estudiante.instanciar_palabras()
@@ -446,7 +448,7 @@ def iniciar_instancia_ontologia():
         "Universidad de Nariño",
         "Vicerrectoría de Investigación e Interacción Social")
 
-    instanciar_docentes.instanciar()
+    # instanciar_docentes.instanciar()
     print("Now we will do for students")
     instanciar_estudiantes = InstanciarInvestigacionesEstudiantes(
         "Universidad de Nariño",
