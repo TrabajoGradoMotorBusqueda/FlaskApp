@@ -1,7 +1,6 @@
 from owlready2 import *
 from main import BASE_DIR
 
-
 # agregar la carpeta que contiene la ontologia,
 # para busqueda local, sino en internet
 onto_path.append(BASE_DIR / 'FILES/ontologia')
@@ -55,6 +54,9 @@ with ontologia:
 
         def relation_gi_tiene_estudiante(self, estudiante):
             self.gi_tiene_estudiante.append(estudiante)
+
+        def relation_gi_pertenece_programa(self, programa):
+            self.gi_pertenece_programa.append(programa)
 
 
     # SUBCLASE LINEA DE INVESTIGACION
@@ -166,6 +168,7 @@ with ontologia:
         def relation_ie_es_autor_pi(self, pi):
             self.ie_es_autor_pi.append(pi)
 
+
     # CLASE PALABRA
     class Palabra(Thing):
 
@@ -254,6 +257,12 @@ with ontologia:
         def relation_pi_tiene_palabra(self, palabra):
             self.pi_tiene_palabra.append(palabra)
 
+        def relation_pi_se_asocia_facultad(self, facultad):
+            self.pi_se_asocia_facultad.append(facultad)
+
+        def relation_pi_se_asocia_programa(self, programa):
+            self.pi_se_asocia_programa.append(programa)
+
 
     # CLASE UNIVERSIDAD
     class Universidad(Thing):
@@ -277,8 +286,6 @@ with ontologia:
             self.universidad_tiene_viis.append(viis)
 
 
-
-
     # SUBCLASE FACULTAD
     class Facultad(Universidad):
 
@@ -297,6 +304,8 @@ with ontologia:
         def relation_facultad_tiene_departamento(self, departamento):
             self.facultad_tiene_departamento.append(departamento)
 
+        def relation_facultad_asociado_programa(self, programa):
+            self.facultad_asociado_programa.append(programa)
 
     # SUBCLASE DEPARTAMENTO
     class Departamento(Facultad):
@@ -340,6 +349,12 @@ with ontologia:
 
         def relation_programa_tiene_docente(self, docente):
             self.programa_tiene_docente.append(docente)
+
+        def relation_programa_se_asocia_facultad(self, facultad):
+            self.programa_se_asocia_facultad.append(facultad)
+
+        def relation_programa_tiene_gi(self, gi):
+            self.programa_tiene_gi.append(gi)
 
 
     # CLASE VIIS
