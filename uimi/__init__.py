@@ -32,7 +32,7 @@ def search_engine(palabras):
 
     id_documentos_d2v = documentos_recomendados(palabras_limpias, topn=len(id_documentos_ontologia))
     documentos_d2v = busqueda_lista_documentos(id_documentos_d2v)
-    #
+
     ranking_final_documentos = []
     for ontologia_doc, d2v_doc in zip(documentos_ontologia, documentos_d2v):
         if ontologia_doc == d2v_doc:

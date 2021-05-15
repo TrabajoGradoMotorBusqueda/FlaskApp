@@ -20,19 +20,23 @@ def palabras_similares(palabras):
     # Numeros
     palabras_numeros = regex.findall(palabras)
     # limpiar palabras
-    palabras_limpias = clean.limpieza_corpus(palabras)()
+    palabras_limpias_originales = clean.limpieza_corpus(palabras)()
+    palabras_limpias = []
 
     # Palabras para encontrar recomendaciones en w2v
     palabras_w2v = []
     # Palabras a buscar en la ontologia
     palabras_busqueda = []
-    for palabra in palabras_limpias:
+    for i, palabra in enumerate(palabras_limpias_originales):
         adicionales = difflib.get_close_matches(palabra, lemas, n=5, cutoff=0.90)
         if len(adicionales) != 0:
-            palabras_w2v.append(palabra)
+            nueva_palabra = palabra if adicionales[0] == palabra else adicionales[0]
+            palabras_w2v.append(nueva_palabra)
+            palabras_limpias.append(nueva_palabra)
             palabras_busqueda.extend(adicionales)
         elif palabra in modelo.wv.vocab:
             palabras_w2v.append(palabra)
+            palabras_limpias.append(palabra)
 
     if len(palabras_w2v) == 0:
         return palabras_limpias

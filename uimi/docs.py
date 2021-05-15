@@ -4,7 +4,7 @@
 from doc2vec import modelo
 
 
-def documentos_recomendados(palabras_limpias, topn):
+def documentos_recomendados(palabras_limpias, topn=50):
     # global modelo
     # modelo = modelo or cargar_modelo()
 
