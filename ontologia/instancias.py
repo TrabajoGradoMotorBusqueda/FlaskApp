@@ -157,7 +157,7 @@ def definir_id(nombre, clase):
     # if clase == "Grupo_investigacion": nombre = nombre.capitalize()
 
     clase_ontologia = ontologia.search_one(iri=f"*{clase}")
-    instancia = ontologia.search_one(iri=f"*{nombre}*", is_a=clase_ontologia)
+    instancia = ontologia.search_one(iri=f"*{nombre}", is_a=clase_ontologia)
 
     if instancia is None:
         id_objeto = len(clase_ontologia.instances()) + 1
