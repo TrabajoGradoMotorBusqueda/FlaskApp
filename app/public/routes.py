@@ -6,14 +6,12 @@ Routes
 """
 import json
 
-from flask import url_for, render_template, jsonify, json as fjson
-from flask import redirect
+from flask import url_for, render_template, jsonify
+from flask import redirect, request
 
 from . import public_bp
 
 from uimi import search_engine
-
-from json import dumps
 
 from .forms import SearchForm
 
@@ -31,19 +29,18 @@ def index():
             import fixmi
             fixmi.iniciar_fixmi()
             return "YAAAA"
-        return redirect(url_for('public.busqueda', query=query))
+        return redirect(url_for('public.resultados', query=query))
 
     return render_template('public/index.html', **context)
 
 
+@public_bp.route('/resultados', methods=['GET'])
+def resultados():
+    return render_template('public/results.html', query=request.args.get('query'))
+
+
 @public_bp.route('/busqueda/<query>', methods=['GET'])
 def busqueda(query):
-    resultados = search_engine(query)
-    # resultados = construir_resultados(resultados)
-    # print(resultados)
-    # for i in range(len(resultados)):
-    #     titulo = resultados[i]['titulo']
-    #     print(f'({str(i)}) {titulo.capitalize()} \n')
-    return jsonify(investigaciones=resultados, total=len(resultados))
+    resultados_investigaciones = search_engine(query)
+    return jsonify(investigaciones=resultados_investigaciones, total=len(resultados_investigaciones))
     # return render_template('public/results.html', resultados=dumps(resultados))
-
