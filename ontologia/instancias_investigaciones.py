@@ -278,15 +278,19 @@ class InvestigacionOntologia(ABC):
                 grupo.relation_gi_tiene_li(linea)
 
             for i, investigador in enumerate(self.investigadores):
-
+                # TODO: Agregar Autores
                 if self.tipo == "estudiantes":
                     # Investigador -> Estudiante
                     investigador.relation_investigador_es_estudiante(investigador)
+                    # Estudiante Autor -> Proyecto
+                    investigador.estudiante_es_autor_pi.append(proyecto_investigacion)
                     # Grupo de Investigacion -> Estudiante
                     grupo.relation_gi_tiene_estudiante(investigador)
                 else:
                     # Investigador -> Docente
                     investigador.relation_investigador_es_docente(investigador)
+                    # Docente Autor -> Proyecto
+                    investigador.docente_es_autor_pi.append(proyecto_investigacion)
                     # Grupo de Investigacion -> Docente
                     grupo.relation_gi_tiene_docente(investigador)
 
@@ -313,6 +317,10 @@ class InvestigacionOntologia(ABC):
                 # Relacion Programa, Facultad
                 if i < len(self.programas):
                     programa = self.programas[i]
+                    # Proyecto -> Programa
+                    proyecto_investigacion.relation_pi_se_asocia_programa(programa)
+                    # Programa -> Grupo Invstigacion
+                    programa.relation_programa_tiene_gi(grupo)
                     if self.tipo == "estudiantes":
                         # Programa -> Estudiante
                         programa.relation_programa_tiene_estudiante(investigador)
@@ -325,22 +333,26 @@ class InvestigacionOntologia(ABC):
                 else:
                     programa = None
 
-                if departamento is not None:
-                    if i < len(self.departamentos):
-                        departamento = self.departamentos[i]
-                        # Departamento -> Programa
-                        if programa is not None:
-                            departamento.relation_departamento_tiene_programa(programa)
-                        # Departamento -> Grupo de Investigacion
-                        departamento.relation_departamento_tiene_gi(grupo)
-                    else:
-                        departamento = None
+                # if departamento is not None:
+                #     if i < len(self.departamentos):
+                #         departamento = self.departamentos[i]
+                #         # Departamento -> Programa
+                #         if programa is not None:
+                #             departamento.relation_departamento_tiene_programa(programa)
+                #         # Departamento -> Grupo de Investigacion
+                #         departamento.relation_departamento_tiene_gi(grupo)
+                #     else:
+                #         departamento = None
 
                 if i < len(self.facultades):
                     facultad = self.facultades[i]
+                    # Proyecto -> Facultad
+                    proyecto_investigacion.relation_pi_se_asocia_facultad(facultad)
+                    # Facultad -> Programa
+                    facultad.relation_facultad_asociado_programa(programa)
                     # Facultad -> Departamento
-                    if departamento is not None:
-                        facultad.relation_facultad_tiene_departamento(departamento)
+                    # if departamento is not None:
+                    #     facultad.relation_facultad_tiene_departamento(departamento)
                     # Universidad -> Facultad
                     universidad.relation_universidad_tiene_facultad(facultad)
 

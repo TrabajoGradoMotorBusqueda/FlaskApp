@@ -4,6 +4,7 @@
 {% block styles %}
     {{ super() }}
     <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/Results.css')}}">
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/style.css')}}">
 {% endblock %}
 
 
@@ -12,96 +13,66 @@
 {% endblock%}
 
 {% block content %}
-nada
-    <div class="modal fade" role="dialog" tabindex="-1" id="testmodal">
-        <div class="modal-dialog" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h4 class="modal-title">Modal Title</h4><button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
-                </div>
-                <div class="modal-body">
-                    <p>The content of your modal.</p>
-                </div>
-                <div class="modal-footer"><button class="btn btn-light" type="button" data-dismiss="modal">Close</button><button class="btn btn-primary" type="button">Save</button></div>
-            </div>
-        </div>
-    </div>
+
     <div id="container-results" class="container">
         <div id="row-results" class="row">
-            <div id="col-result" class="col-md-4 d-flex justify-content-center">
-                <div id="card-result" class="card">
-                    <div id="card-result-title">
-                        <h5 class="text-center">Diagnóstico del impacto de las iniciativas emprendedoras de los egresados del programa de diseño industrial de la Universidad de Nariño</h5>
-                    </div>
-                    <div id="card-result-data" class="card-body d-flex flex-column">
-                        <div id="card-authors">
-                            <!--<h6 class="text-muted mb-2">Autores</h6>-->
-                            <h6 class="mb-2">Autores</h6>
-                            <p>- David Santiago Pinchao Ortiz<br>- DOyoung de NCT<br></p>
-                        </div>
-                        <div id="card-program" >
-                            <h6 class="mb-2">Programa</h6>
-                            <p>Ingenieria de sistemas</p>
-                        </div>
-                        <div id="card-keywords">
-                            <h6 class="mb-2">Palabras Clave</h6>
-                            <p>Palabra Clave 1 - Palabra Clave - Palabra Clave 3 - Palabra Clave 4 - Palabra Clave 5.</p>
-                        </div>
-                        <a id="card-show" class="card-link align-self-center" data-bss-hover-animate="pulse" href="#" data-toggle="modal" data-target="#testmodal">
-                            Ver más
-                        </a>
-                    </div>
-                </div>
-            </div>
-            <div id="col-result" class="col-md-4 d-flex justify-content-center">
-                <div id="card-result" class="card">
-                    <div id="card-result-title">
-                        <h5 class="text-center">Diagnóstico del impacto de las iniciativas emprendedoras de los egresados del programa de diseño industrial de la Universidad de Nariño</h5>
-                    </div>
-                    <div id="card-result-data" class="card-body d-flex flex-column">
-                        <div id="card-authors">
-                            <h6 class="text-muted mb-2">Autores</h6>
-                            <p>- David Santiago Pinchao Ortiz<br>- DOyoung de NCT<br></p>
-                        </div>
-                        <div id="card-program" >
-                            <h6 class="text-muted mb-2">Programa</h6>
-                            <p>Ingenieria de sistemas</p>
-                        </div>
-                        <div id="card-keywords">
-                            <h6 class="text-muted mb-2">Palabras Clave</h6>
-                            <p>Palabra Clave 1 - Palabra Clave - Palabra Clave 3 - Palabra Clave 4 - Palabra Clave 5.</p>
-                        </div>
-                        <a id="card-show" class="card-link align-self-center" data-bss-hover-animate="pulse" href="#" data-toggle="modal" data-target="#testmodal">
-                            Ver más
-                        </a>
-                    </div>
-                </div>
-            </div>
-            <div id="col-result" class="col-md-4 d-flex justify-content-center">
-                <div id="card-result" class="card">
-                    <div id="card-result-title">
-                        <h5 class="text-center">Diagnóstico del impacto de las iniciativas emprendedoras de los egresados del programa de diseño industrial de la Universidad de Nariño</h5>
-                    </div>
-                    <div id="card-result-data" class="card-body d-flex flex-column">
-                        <div id="card-authors">
-                            <h6 class="text-muted mb-2">Autores</h6>
-                            <p>- David Santiago Pinchao Ortiz<br>- DOyoung de NCT<br></p>
-                        </div>
-                        <div id="card-program" >
-                            <h6 class="text-muted mb-2">Programa</h6>
-                            <p>Ingenieria de sistemas</p>
-                        </div>
-                        <div id="card-keywords">
-                            <h6 class="text-muted mb-2">Palabras Clave</h6>
-                            <p>Palabra Clave 1 - Palabra Clave - Palabra Clave 3 - Palabra Clave 4 - Palabra Clave 5.</p>
-                        </div>
-                        <a id="card-show" data-bss-hover-animate="pulse" class="card-link align-self-center" href="#" data-toggle="modal" data-target="#testmodal">
-                            Ver más
-                        </a>
-                    </div>
-                </div>
-            </div>
-        </div>
+            <div class="card-body">
+                <div class="profiletimeline">
+{#                    <div class="sl-item">#}
+{#                        <div class="sl-left"> <img src="./assets/images/users/2.jpg" alt="user" class="img-circle"> </div>#}
+{#                        <div class="sl-right">#}
+{#                            <div> <a href="#" class="link">John Doe</a> <span class="sl-date">5 minutes ago</span>#}
+{#                                <div class="m-t-20 row">#}
+{#                                    <div class="col-md-3 col-xs-12"><img src="./assets/images/big/img1.jpg" alt="user" class="img-responsive radius"></div>#}
+{#                                    <div class="col-md-9 col-xs-12">#}
+{#                                        <p> Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer nec odio. Praesent libero. Sed cursus ante dapibus diam. </p> <a href="#" class="btn btn-success"> Design weblayout</a></div>#}
+{#                                </div>#}
+{#                                <div class="like-comm m-t-20"> <a href="javascript:void(0)" class="link m-r-10">2 comment</a> <a href="javascript:void(0)" class="link m-r-10"><i class="fa fa-heart text-danger"></i> 5 Love</a> </div>#}
+{#                            </div>#}
+{#                        </div>#}
+{#                    </div>#}
+{#                    <div class="sl-item">#}
+{#                        <div class="sl-left number-circle"><strong>1</strong></div>#}
+{#                        <div class="sl-right">#}
+{#                            <div>#}
+{#                                <h3 class="d-inline">Lorem ipsum dolor sit amet consectetur adipisicing elit. Nemo dolorem cupiditate quaerat pariatur molestiae minima asperiores totam numquam maiores fuga saepe ut distinctio illo vero, accusantium placeat odit tempore laboriosam!</h3> <span class="sl-date">YEAR HERe</span>#}
+{#                                <blockquote class="m-t-10">#}
+{#                                    <h5>Resumen: </h5>#}
+{#                                    <p>#}
+{#                                        Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt#}
+{#                                        Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt#}
+{#                                        Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt#}
+{#                                        Lorem ipsum dolor sit amet consectetur adipisicing elit. Exercitationem officia minus ipsum inventore dicta nihil numquam quis optio, incidunt eos omnis. Ipsam, quaerat. Soluta, tempore! Suscipit itaque quas aperiam nemo.a#}
+{#                                    </p>#}
+{#                                    <h5 class="d-inline">Palabras Clave: </h5>Una, Dos Tres, Cuatro, Cinco#}
+{#                                </blockquote>#}
+{#                                <div>#}
+{#                                    <h5>Autores: </h5>#}
+{#                                        <ul>#}
+{#                                            <li>Uno</li>#}
+{#                                            <li>Dos</li>#}
+{#                                            <li>Tres</li>#}
+{#                                            <li>Cuatro</li>#}
+{#                                        </ul>#}
+{#                                </div>#}
+{#                                <h5 class="d-inline">Asesores: </h5> Una, Dos Tres, Cuatro, Cinco#}
+{#                                <br>#}
+{#                                <h5 class="d-inline">Facultad: </h5> Una, Dos#}
+{#                                <br>#}
+{#                                <h5 class="d-inline">Programa: </h5> Una, Dos#}
+{#                                <br>#}
+{#                                <h5 class="d-inline">Grupo Investigacion: </h5> Una, Dos#}
+{#                                <br>#}
+{#                                <h5 class="d-inline">Linea Investigacion: </h5> Una, Dos#}
+{#                                <br>#}
+{#                                <h5 class="d-inline">Tipo Convocatoria: </h5> Docente#}
+{#                            </div>#}
+{#                        </div>#}
+{#                    </div>#}
+{#                    <hr>#}
+{#                </div>#}
+{#            </div>#}
+{#        </div>#}
         <div class="row" style="margin-top: 40px;">
             <div class="col">
                 <nav class="d-flex justify-content-center">
@@ -116,15 +87,15 @@ nada
             </div>
         </div>
     </div>
+
+<div id="Pagination" class="flickr"></div>
 {% endblock %}
 
 {% block scripts %}
     {{ super() }}
+    <script src="{{ url_for('static', filename='js/jquery.pagination.js')}}"></script>
+    <script>const query = '{{query}}';</script>
     <script src="{{ url_for('static', filename='js/resultados.js')}}"></script>
-    <script>
-        data = JSON.parse({{ resultados | tojson | safe }})
-        load_results(data);
-    </script>
 {% endblock %}
 
 

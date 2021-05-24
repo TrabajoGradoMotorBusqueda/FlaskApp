@@ -1,59 +1,133 @@
-let resultados;
-function load_results(data) {
-  resultados = data;
-}
+(async function load() {
+  console.log('join');
+  const BASE_API = 'http://localhost:5000/busqueda/';
 
-const row_result = document.getElementById('row-results');
+  async function getData(url) {
+    const response = await fetch(url);
+    const data = await response.json();
 
-//Creamos un nuevo elemetno que se va a agregar al HTML
-function createTemplate(HTMLstring) {
-  const html = document.implementation.createHTMLDocument();
-  html.body.innerHTML = HTMLstring;
-  return html.body.children[0];
-}
+    if (data.investigaciones.length > 0) {
+      return data;
+    } else {
+      throw new Error('No se encontro ningun resultado');
+    }
+  }
 
-//Plantilla CARD
-const card_result = function (title, status, keywords) {
-  let string_keywords = '';
-  keywords.forEach((word, i) => {
-    i !== keywords.length - 1
-      ? (string_keywords += ''.concat(word, ' - '))
-      : (string_keywords += ''.concat(word, '.'));
-  });
-  return `
-    <div id="col-result" class="col-md-4 d-flex justify-content-center">
-        <div id="card-result" class="card">
-            <div id="card-result-title">
-                <h5 class="text-center">${title}</h5>
-            </div>
-            <div id="card-result-data" class="card-body d-flex flex-column">
-                <div id="card-authors">
-                    <!--<h6 class="text-muted mb-2">Autores</h6>-->
-                    <h6 class="mb-2">Autores</h6>
-                    <p>- David Santiago Pinchao Ortiz<br>- Doyoung de NCT<br></p>
+  function investigacionItemTemplate(index, investigacion) {
+    let index_text = index + 1
+    let id = investigacion.id
+    let titulo = investigacion.titulo;
+    let anio =
+      investigacion.anio_convocatoria != null
+        ? investigacion.anio_convocatoria
+        : '';
+    let resumen = investigacion.resumen;
+    let keywords =
+      investigacion.palabras_clave.length > 0
+        ? investigacion.palabras_clave.join(', ')
+        : 'No Registradas';
+    let autores = investigacion.autores
+      .map((autor) => {
+        return '<li>' + autor + '</li>';
+      })
+      .join('\n');
+    let asesores = '';
+    if (investigacion.asesores != undefined) {
+      asesores = `
+            <h5 class="d-inline">${
+              investigacion.asesores.length > 1 ? 'Asesores' : 'Asesor'
+            }: </h5>${investigacion.asesores.join(' ,')}.
+            <br>
+        `;
+    }
+    let facultad_text =
+      investigacion.facultades.length > 1 ? 'Facultades' : 'Facultad';
+    let facultades = investigacion.facultades.join(' ,');
+    let programas_text =
+      investigacion.programas.length > 1 ? 'Programas' : 'Programa';
+    let programas = investigacion.programas.join(' ,');
+    let grupos_text =
+      investigacion.grupos_investigacion.length > 1
+        ? 'Grupos de Investigacion'
+        : 'Grupo de Investigacion';
+    let grupos = investigacion.grupos_investigacion.join(' ,');
+    let lineas_text =
+      investigacion.lineas_investigacion.length > 1
+        ? 'Lineas de Investigacion'
+        : 'Linea de Investigacion';
+    let lineas = investigacion.lineas_investigacion.join(' ,');
+
+    return `
+    <div class="sl-item">
+        <div class="sl-left number-circle"><strong>${index_text}</strong></div>
+        <div class="sl-right">
+            <div>
+                <h3>
+                    <a class="link"data-toggle="collapse" href="#investigacion-${id}">
+                        ${titulo}
+                    </a>
+                </h3>
+                <span class="sl-date">Investigación ${investigacion.tipo_investigacion} - ${anio}</span>
+                <div class="collapse" id="investigacion-${id}">
+                    <blockquote class="m-t-10">
+                        <h5>Resumen: </h5>
+                        <p>
+                            ${resumen}
+                        </p>
+                        <h5 class="d-inline">Palabras Clave: </h5>
+                        ${keywords}.
+                    </blockquote>
+                    <div>
+                        <h5>Autores: </h5>
+                        <ul>
+                            ${autores}
+                        </ul>
+                    </div>
+                    ${asesores}
+                    <h5 class="d-inline">${facultad_text}: </h5> ${facultades}.
+                    <br>
+                    <h5 class="d-inline">${programas_text}: </h5> ${programas}.
+                    <br>
+                    <h5 class="d-inline">${grupos_text}: </h5> ${grupos}.
+                    <br>
+                    <h5 class="d-inline">${lineas_text}: </h5> ${lineas}.
+                    <br>
+                    <h5 class="d-inline">Tipo Convocatoria: </h5> ${
+                    investigacion.tipo_convocatoria
+                    }
                 </div>
-                <div id="card-program" >
-                    <h6 class="mb-2">Programa</h6>
-                    <p>${status}</p>
-                </div>
-                <div id="card-keywords">
-                    <h6 class="mb-2">Palabras Clave</h6>
-                    <p>${string_keywords}</p>
-                </div>
-                <a id="card-show" class="card-link align-self-center" data-bss-hover-animate="pulse" href="#" data-toggle="modal" data-target="#testmodal">
-                    Ver más
-                </a>
             </div>
         </div>
+        <hr>
     </div>
     `;
-};
+  }
 
-let test = createTemplate(card_result('Uno', 'dos', ['a', 'b', 'c']));
-row_result.append(test);
+  function createTemplate(HTMLstring) {
+    const html = document.implementation.createHTMLDocument();
+    html.body.innerHTML = HTMLstring;
+    return html.body.children[0];
+  }
 
-let f = createTemplate(card_result('Titulo', 'asdjasd', ['a', 'b', 'c']));
-row_result.append(f);
+  // Consultar Busqueda
+  const params = new URLSearchParams(window.location.search);
+  const query = params.get('query')
+  const resultados = await getData(BASE_API + query);
 
-let z = createTemplate(card_result('Titulo', 'asdjasd', ['a', 'b', 'c']));
-row_result.append(z);
+  const $resultsContainer = document.querySelector('.profiletimeline');
+  renderResultadosInvestigaciones(
+    resultados.investigaciones,
+    $resultsContainer
+  );
+
+  function renderResultadosInvestigaciones(investigaciones, $container) {
+    $container.children[0].remove();
+    investigaciones.forEach((investigacion, index) => {
+      const HTMLString = investigacionItemTemplate(index, investigacion);
+      const investigacionElement = createTemplate(HTMLString);
+
+      $container.append(investigacionElement);
+    });
+  }
+})();
+

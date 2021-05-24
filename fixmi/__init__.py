@@ -14,7 +14,7 @@ def iniciar_fixmi():
     start = time.time()
     # Cargar Resumenes
     # resumenes_docentes, resumenes_estudiantes = leer_resumenes()
-    # # Estructurar Resumenes
+    # Estructurar Resumenes
     # docentes = estructura_dataset(resumenes_docentes)
     # estudiantes = estructura_dataset(resumenes_estudiantes)
     # # Eliminar Resumenes Originales
@@ -24,7 +24,7 @@ def iniciar_fixmi():
     # almacenar_resumen(estudiantes, 'estudiantes')  # Almacenar Datos Estudiantes
     # # Almacenar csv
     # docentes.to_csv(BASE_DIR / 'FILES/resumenes/Resumenes_Docentes.csv')
-    # docentes.to_csv(BASE_DIR / 'FILES/resumenes/Resumenes_Estudiantes.csv')
+    # estudiantes.to_csv(BASE_DIR / 'FILES/resumenes/Resumenes_Estudiantes.csv')
     # # Eliminar Resumenes Transformados
     # del docentes, estudiantes
     # # Construccion de Corpus y Vocabulario
@@ -32,11 +32,11 @@ def iniciar_fixmi():
 
     # Seguimos con la Ontologia
     from ontologia import instancias_investigaciones as ontologia_instanciar
-    # ontologia_instanciar.iniciar_instancia_ontologia()
+    ontologia_instanciar.iniciar_instancia_ontologia()
 
     # Entrenar d2v
-    from doc2vec import entrenamiento_d2v
-    entrenamiento_d2v(autores=True)
+    # from doc2vec import entrenamiento_d2v
+    # entrenamiento_d2v(autores=True)
 
     print('fixmi concluido')
     end = time.time()

@@ -10,7 +10,10 @@ from time import time
 from gensim import utils
 from gensim.models.doc2vec import Doc2Vec, TaggedDocument
 
-modelo = None
+try:
+    modelo = Doc2Vec.load(str(BASE_DIR / "FILES/modelos/modeloD2V_autores.model"))
+except:
+    modelo = None
 
 
 class Corpus(object):
@@ -67,14 +70,13 @@ def entrenamiento_d2v(autores=False):
     print(d2v.wv.most_similar(['inteligencia']))
     global modelo
     modelo = d2v
-    modelo.wv.init_sims()
 
 
-def cargar_modelo():
-    global modelo
-    try:
-        modelo = Doc2Vec.load(str(BASE_DIR / "FILES/modelos/modeloD2V_autores.model"))
-        # modelo.wv.init_sims()
-        return modelo
-    except:
-        return None
+# def cargar_modelo():
+#     global modelo
+#     try:
+#         modelo = Doc2Vec.load(str(BASE_DIR / "FILES/modelos/modeloD2V_autores.model"))
+#         # modelo.wv.init_sims()
+#         return modelo
+#     except:
+#         return None
