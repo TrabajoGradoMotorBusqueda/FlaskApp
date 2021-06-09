@@ -154,3 +154,52 @@ class Investigacion(db.Model):
     @classmethod
     def __get_columns__(cls):
         return [i for i in cls.__dict__.keys() if not i.startswith('_') or i == 'id']
+
+
+
+
+class Calificaciones(db.Model):
+
+    __tablename__ = 'calificaciones'
+
+    id_calificacion = db.Column(db.Integer, primary_key=True, nullable=False)
+    Usuarios_id_usuario = db.Column(db.Integer, ForeignKey(usuarios.id_usuario), nullable=False)
+    usuarios=relationship("Usuarios", backref=backref("usuarios", uselist=False))
+    opinion = db.Column(db.Text)
+    calificacion = db.Column(db.Integer)
+
+
+class Descargas(db.Model):
+
+    __tablename__ = 'descargas'
+
+    id_descarga = db.Column(db.Integer, primary_key=True, nullable=False)  
+    Usuarios_id_usuario = db.Column(db.Integer, ForeignKey(usuarios.id_usuario), nullable=False)
+    usuarios=relationship("Usuarios", backref=backref("usuarios", uselist=False))
+    Investigaciones_id = db.Column(db.Integer, ForeignKey(investigaciones.id), nullable=False)
+    investigaciones = relationship("Investigaciones", backref=backref("investigaciones", uselist=False))
+    Busquedas_id_busqueda = db.Column(db.Integer, ForeignKey(busquedas.id_busqueda), nullable=False)
+    busquedas=relationship("Busquedas", backref=backref("busquedas", uselist=False))
+    #fecha_descarga = db.Column(db.Time)
+
+
+class Busquedas(db.Model):
+
+    __tablename__ = 'busquedas'
+
+    id_busqueda = db.Column(db.Integer, primary_key=True, nullable=False)
+    Usuarios_id_usuario = db.Column(db.Integer, ForeignKey(usuarios.id_usuario), nullable=False)
+    usuarios=relationship("Usuarios", backref=backref("usuarios", uselist=False))
+    #fecha_busqueda = db.Column(db.Time)
+    busqueda = db.Column(db.Text)
+    busqueda_preprocesada = db.Column(db.Text)
+
+
+class Resultados(db.Model):
+    
+    __tablename__ = 'resultados'
+
+    Busquedas_id_busqueda = db.Column(db.Integer, primary_key = True, ForeignKey(busquedas.id_busqueda), nullable=False)
+    busquedas=relationship("Busquedas", backref=backref("busquedas", uselist=False))
+    Investigaciones_id = db.Column(db.Array(db.Integer, primary_key = True, ForeignKey(investigaciones.id), nullable=False))
+    investigaciones = relationship("Investigaciones", backref=backref("investigaciones", uselist=False))
