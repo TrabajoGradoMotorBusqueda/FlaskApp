@@ -8,13 +8,14 @@
 
         {% block styles %}
             <!-- Bootstrap CSS -->
-            {{ bootstrap.load_css() }}
-{#            <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Cookie">#}
+            {{ bootstrap.load_css() }}            
+{#          <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Cookie">#}
             <link rel="shortcut icon" type="image/jpg" href="../static/search.ico"/>
             <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='fonts/fontawesome-all.min.css') }}">
             <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='fonts/font-awesome.min.css') }}">
             <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='fonts/fontawesome5-overrides.min.css') }}">
             <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/Footer.css')}}">
+            <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/fonts.css')}}">
         {% endblock %}
 
        	<title>{% block title %}Buscador UIMI{% endblock %}</title>
