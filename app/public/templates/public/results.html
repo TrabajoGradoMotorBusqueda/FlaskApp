@@ -4,7 +4,8 @@
 {% block styles %}
     {{ super() }}
     <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/Results.css')}}">
-    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/style.css')}}">
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/StyleResults.css')}}">
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/Pagination.css')}}">
 {% endblock %}
 
 
@@ -18,19 +19,18 @@
         <div id="row-results" class="row">
             <div class="card-body">
                 <div class="profiletimeline">
-{#                    <div class="sl-item">#}
-{#                        <div class="sl-left"> <img src="./assets/images/users/2.jpg" alt="user" class="img-circle"> </div>#}
-{#                        <div class="sl-right">#}
-{#                            <div> <a href="#" class="link">John Doe</a> <span class="sl-date">5 minutes ago</span>#}
-{#                                <div class="m-t-20 row">#}
-{#                                    <div class="col-md-3 col-xs-12"><img src="./assets/images/big/img1.jpg" alt="user" class="img-responsive radius"></div>#}
-{#                                    <div class="col-md-9 col-xs-12">#}
-{#                                        <p> Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer nec odio. Praesent libero. Sed cursus ante dapibus diam. </p> <a href="#" class="btn btn-success"> Design weblayout</a></div>#}
-{#                                </div>#}
-{#                                <div class="like-comm m-t-20"> <a href="javascript:void(0)" class="link m-r-10">2 comment</a> <a href="javascript:void(0)" class="link m-r-10"><i class="fa fa-heart text-danger"></i> 5 Love</a> </div>#}
-{#                            </div>#}
-{#                        </div>#}
-{#                    </div>#}
+                </div>
+            </div>
+        </div>
+        <div class="row" style="margin-top: 40px;">
+            <div class="col">
+                <nav class="d-flex justify-content-center" id="paginator">
+                </nav>
+            </div>
+        </div>
+    </div>
+
+
 {#                    <div class="sl-item">#}
 {#                        <div class="sl-left number-circle"><strong>1</strong></div>#}
 {#                        <div class="sl-right">#}
@@ -73,22 +73,20 @@
 {#                </div>#}
 {#            </div>#}
 {#        </div>#}
-        <div class="row" style="margin-top: 40px;">
-            <div class="col">
-                <nav class="d-flex justify-content-center">
-                    <ul class="pagination">
-                        <li class="page-item"><a class="page-link" href="#" aria-label="Previous"><span aria-hidden="true">«</span></a></li>
-                        <li class="page-item"><a class="page-link" href="#">1</a></li>
-                        <li class="page-item"><a class="page-link" href="#">2</a></li>
-                        <li class="page-item"><a class="page-link" href="#">3</a></li>
-                        <li class="page-item"><a class="page-link" href="#" aria-label="Next"><span aria-hidden="true">»</span></a></li>
-                    </ul>
-                </nav>
-            </div>
-        </div>
-    </div>
+{#        <div class="row" style="margin-top: 40px;">#}
+{#            <div class="col">#}
+{#                <nav class="d-flex justify-content-center">#}
+{#                    <ul class="pagination">#}
+{#                        <li class="page-item"><a class="page-link" href="#" aria-label="Previous"><span aria-hidden="true">«</span></a></li>#}
+{#                        <li class="page-item"><a class="page-link" href="#">1</a></li>#}
+{#                        <li class="page-item"><a class="page-link" href="#">2</a></li>#}
+{#                        <li class="page-item"><a class="page-link" href="#">3</a></li>#}
+{#                        <li class="page-item"><a class="page-link" href="#" aria-label="Next"><span aria-hidden="true">»</span></a></li>#}
+{#                    </ul>#}
+{#                </nav>#}
+{#            </div>#}
+{#        </div>#}
 
-<div id="Pagination" class="flickr"></div>
 {% endblock %}
 
 {% block scripts %}

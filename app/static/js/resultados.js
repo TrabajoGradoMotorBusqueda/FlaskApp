@@ -14,9 +14,9 @@
   }
 
   function investigacionItemTemplate(index, investigacion) {
-    let index_text = index + 1
-    let id = investigacion.id
-    let titulo = investigacion.titulo;
+    let index_text = index + 1;
+    let id = investigacion.id;
+    let titulo = investigacion.titulo.toUpperCase();
     let anio =
       investigacion.anio_convocatoria != null
         ? investigacion.anio_convocatoria
@@ -67,7 +67,6 @@
                         ${titulo}
                     </a>
                 </h3>
-                <span class="sl-date">Investigación ${investigacion.tipo_investigacion} - ${anio}</span>
                 <div class="collapse" id="investigacion-${id}">
                     <blockquote class="m-t-10">
                         <h5>Resumen: </h5>
@@ -92,9 +91,9 @@
                     <br>
                     <h5 class="d-inline">${lineas_text}: </h5> ${lineas}.
                     <br>
-                    <h5 class="d-inline">Tipo Convocatoria: </h5> ${
-                    investigacion.tipo_convocatoria
-                    }
+                    <h5 class="d-inline">Tipo Convocatoria: </h5> ${investigacion.tipo_convocatoria}
+                    <br>
+                    <h5 class="d-inline">Año Convocatoria: </h5> ${anio}
                 </div>
             </div>
         </div>
@@ -109,25 +108,60 @@
     return html.body.children[0];
   }
 
-  // Consultar Busqueda
-  const params = new URLSearchParams(window.location.search);
-  const query = params.get('query')
-  const resultados = await getData(BASE_API + query);
-
-  const $resultsContainer = document.querySelector('.profiletimeline');
-  renderResultadosInvestigaciones(
-    resultados.investigaciones,
-    $resultsContainer
-  );
-
-  function renderResultadosInvestigaciones(investigaciones, $container) {
-    $container.children[0].remove();
+  function renderResultadosInvestigaciones(
+    investigaciones,
+    $container,
+    pageNumber
+  ) {
+    if ($container.children.length > 0) {
+      $container.innerHTML = '';
+    }
     investigaciones.forEach((investigacion, index) => {
-      const HTMLString = investigacionItemTemplate(index, investigacion);
+      let index_result = index + (pageNumber - 1) * 10;
+      const HTMLString = investigacionItemTemplate(index_result, investigacion);
       const investigacionElement = createTemplate(HTMLString);
 
       $container.append(investigacionElement);
     });
   }
-})();
 
+  function paginateResults(data, paginator, resultsContainer) {
+    paginator.pagination({
+      dataSource: data,
+      pageSize: 10,
+      showPageNumbers: true,
+      showPrevious: true,
+      showNext: true,
+      showNavigator: true,
+      showGoInput: true,
+      showGoButton: true,
+      goButtonText: 'Ir',
+      className: 'paginationjs-theme-green paginationjs-big',
+      callback: function (data, pagination) {
+        renderResultadosInvestigaciones(
+          data,
+          resultsContainer,
+          pagination.pageNumber
+        );
+      },
+      afterRender: function () {
+          document.body.scrollTop = 0; // For Safari
+          document.documentElement.scrollTop = 0; // For Chrome, Firefox, IE and Opera
+      }
+    });
+  }
+
+  // Consultar Busqueda
+  const params = new URLSearchParams(window.location.search);
+  const query = params.get('query');
+  const resultados = await getData(BASE_API + query);
+
+  const $resultsContainer = document.querySelector('.profiletimeline');
+  // const $resultsContainer = $('.profiletimeline');
+  const $paginator = $('#paginator');
+  paginateResults(resultados.investigaciones, $paginator, $resultsContainer);
+  // renderResultadosInvestigaciones(
+  //   resultados.investigaciones,
+  //   $resultsContainer
+  // );
+})();
