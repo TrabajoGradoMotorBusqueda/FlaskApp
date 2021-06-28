@@ -61,7 +61,7 @@
     <div class="sl-item">
         <div class="sl-left number-circle"><strong>${index_text}</strong></div>
         <div class="sl-right">
-            <div>
+            <div id="${id}" data-id="${id}">
                 <h3>
                     <a class="link"data-toggle="collapse" href="#investigacion-${id}">
                         ${titulo}
