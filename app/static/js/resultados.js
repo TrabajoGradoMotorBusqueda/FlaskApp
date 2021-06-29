@@ -61,7 +61,7 @@
     <div class="sl-item">
         <div class="sl-left number-circle"><strong>${index_text}</strong></div>
         <div class="sl-right">
-            <div>
+            <div id="${id}" data-id="${id}">
                 <h3>
                     <a class="link"data-toggle="collapse" href="#investigacion-${id}">
                         ${titulo}
@@ -94,6 +94,10 @@
                     <h5 class="d-inline">Tipo Convocatoria: </h5> ${investigacion.tipo_convocatoria}
                     <br>
                     <h5 class="d-inline">Año Convocatoria: </h5> ${anio}
+                    <div class="d-flex flex-row-reverse" id="buttons-${id}">
+                      <div class="social-links social-icons" style="margin-top:5px"><a  class="pdf-${id}" data-id="${id}"  style="background-color: #28a745;"><i class="fas fa-file-download"></i></a></div>
+                      <div class="social-links social-icons" style="margin-top:5px;"><a style="font-size: small; background-color: #28a745; width:200px !important;">Investigaciones Relacionadas</i></a></div>
+                    </div>
                 </div>
             </div>
         </div>
@@ -101,7 +105,6 @@
     </div>
     `;
   }
-
   function createTemplate(HTMLstring) {
     const html = document.implementation.createHTMLDocument();
     html.body.innerHTML = HTMLstring;
@@ -122,6 +125,10 @@
       const investigacionElement = createTemplate(HTMLString);
 
       $container.append(investigacionElement);
+      $('.pdf-' + investigacion.id).on('click', function () {
+        $container_investigacion = document.getElementById(investigacion.id);
+        html2pdf($container_investigacion)
+      });
     });
   }
 
