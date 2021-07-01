@@ -1,19 +1,4 @@
-(async function load() {
-  console.log('join');
-  const BASE_API = 'http://localhost:5000/busqueda/';
-
-  async function getData(url) {
-    const response = await fetch(url);
-    const data = await response.json();
-
-    if (data.investigaciones.length > 0) {
-      return data;
-    } else {
-      throw new Error('No se encontro ningun resultado');
-    }
-  }
-
-  function investigacionItemTemplate(index, investigacion) {
+function investigacionItemTemplate(index, investigacion) {
     let index_text = index + 1;
     let id = investigacion.id;
     let titulo = investigacion.titulo.toUpperCase();
@@ -95,8 +80,8 @@
                     <br>
                     <h5 class="d-inline">Año Convocatoria: </h5> ${anio}
                     <div class="d-flex flex-row-reverse" id="buttons-${id}">
-                      <div class="social-links social-icons" style="margin-top:5px"><a  class="pdf-${id}" data-id="${id}"  style="background-color: #28a745;"><i class="fas fa-file-download"></i></a></div>
-                      <div class="social-links social-icons" style="margin-top:5px;"><a style="font-size: small; background-color: #28a745; width:200px !important;">Investigaciones Relacionadas</i></a></div>
+                      <button type="button" class="btn btn-success social-links social-icons pdf-${id}" data-id="${id}" style="background-color: #28a745;"><i class="fas fa-file-download"></i></button>
+                      <button type="button" class="btn btn-success social-links social-icons" style="background-color: #28a745;" data-toggle="modal" data-target="#dialogo1">Investigaciones Relacionadas</button>
                     </div>
                 </div>
             </div>
@@ -105,58 +90,75 @@
     </div>
     `;
   }
-  function createTemplate(HTMLstring) {
-    const html = document.implementation.createHTMLDocument();
-    html.body.innerHTML = HTMLstring;
-    return html.body.children[0];
-  }
+function createTemplate(HTMLstring) {
+  const html = document.implementation.createHTMLDocument();
+  html.body.innerHTML = HTMLstring;
+  return html.body.children[0];
+}
 
-  function renderResultadosInvestigaciones(
-    investigaciones,
-    $container,
-    pageNumber
-  ) {
-    if ($container.children.length > 0) {
-      $container.innerHTML = '';
+function renderResultadosInvestigaciones(
+  investigaciones,
+  $container,
+  pageNumber
+) {
+  if ($container.children.length > 0) {
+    $container.innerHTML = '';
+  }
+  investigaciones.forEach((investigacion, index) => {
+    let index_result = index + (pageNumber - 1) * 10;
+    const HTMLString = investigacionItemTemplate(index_result, investigacion);
+    const investigacionElement = createTemplate(HTMLString);
+
+    $container.append(investigacionElement);
+    $('.pdf-' + investigacion.id).on('click', function () {
+      $container_investigacion = document.getElementById(investigacion.id);
+      html2pdf($container_investigacion)
+    });
+  });
+}
+
+function paginateResults(data, paginator, resultsContainer) {
+  paginator.pagination({
+    dataSource: data,
+    pageSize: 10,
+    showPageNumbers: true,
+    showPrevious: true,
+    showNext: true,
+    showNavigator: true,
+    showGoInput: true,
+    showGoButton: true,
+    goButtonText: 'Ir',
+    className: 'paginationjs-theme-green paginationjs-big',
+    callback: function (data, pagination) {
+      renderResultadosInvestigaciones(
+        data,
+        resultsContainer,
+        pagination.pageNumber
+      );
+    },
+    afterRender: function () {
+        document.body.scrollTop = 0; // For Safari
+        document.documentElement.scrollTop = 0; // For Chrome, Firefox, IE and Opera
     }
-    investigaciones.forEach((investigacion, index) => {
-      let index_result = index + (pageNumber - 1) * 10;
-      const HTMLString = investigacionItemTemplate(index_result, investigacion);
-      const investigacionElement = createTemplate(HTMLString);
+  });
+}
 
-      $container.append(investigacionElement);
-      $('.pdf-' + investigacion.id).on('click', function () {
-        $container_investigacion = document.getElementById(investigacion.id);
-        html2pdf($container_investigacion)
-      });
-    });
+(async function load() {
+  console.log('join');
+  const BASE_API = 'http://localhost:5000/busqueda/';
+
+  async function getData(url) {
+    const response = await fetch(url);
+    const data = await response.json();
+
+    if (data.investigaciones.length > 0) {
+      return data;
+    } else {
+      throw new Error('No se encontro ningun resultado');
+    }
   }
 
-  function paginateResults(data, paginator, resultsContainer) {
-    paginator.pagination({
-      dataSource: data,
-      pageSize: 10,
-      showPageNumbers: true,
-      showPrevious: true,
-      showNext: true,
-      showNavigator: true,
-      showGoInput: true,
-      showGoButton: true,
-      goButtonText: 'Ir',
-      className: 'paginationjs-theme-green paginationjs-big',
-      callback: function (data, pagination) {
-        renderResultadosInvestigaciones(
-          data,
-          resultsContainer,
-          pagination.pageNumber
-        );
-      },
-      afterRender: function () {
-          document.body.scrollTop = 0; // For Safari
-          document.documentElement.scrollTop = 0; // For Chrome, Firefox, IE and Opera
-      }
-    });
-  }
+
 
   // Consultar Busqueda
   const params = new URLSearchParams(window.location.search);
