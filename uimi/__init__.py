@@ -7,7 +7,7 @@ elasticsearch = ElasticSearchEngine()
 # Palabras
 from .words import palabras_similares
 # Documentos
-from .docs import documentos_recomendados
+from .docs import documentos_recomendados, documentos_relacionados
 # Busqueda Ontologia
 from ontologia.busqueda_ontologia import ranking_documentos_ontologia, busqueda_lista_documentos
 
@@ -52,6 +52,14 @@ def search_engine(palabras):
 
     return construir_resultados(ranking_final_documentos)
     # return ranking_final_documentos
+
+
+def investigaciones_relacionadas(investigacion):
+    ids = documentos_relacionados(investigacion)
+    documentos = busqueda_lista_documentos(ids)
+    investigacion_original = busqueda_lista_documentos([investigacion])
+
+    return construir_resultados(documentos), construir_resultados(investigacion_original)[0]
 
 
 def construir_resultados(lista_resultados):

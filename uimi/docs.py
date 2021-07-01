@@ -12,3 +12,10 @@ def documentos_recomendados(palabras_limpias, topn=25):
     documentos = modelo.docvecs.most_similar([vector_busqueda], topn=topn)
 
     return [documento[0] for documento in documentos]
+
+
+def documentos_relacionados(investigacion):
+
+    documentos = modelo.docvecs.most_similar(investigacion, topn=5)
+    return [documento[0] for documento in documentos]
+
