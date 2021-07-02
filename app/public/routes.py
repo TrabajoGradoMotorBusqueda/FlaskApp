@@ -11,7 +11,7 @@ from flask import redirect, request
 
 from . import public_bp
 
-from uimi import search_engine
+from uimi import search_engine, investigaciones_relacionadas
 
 from .forms import SearchForm
 
@@ -42,5 +42,13 @@ def resultados():
 @public_bp.route('/busqueda/<query>', methods=['GET'])
 def busqueda(query):
     resultados_investigaciones = search_engine(query)
+
     return jsonify(investigaciones=resultados_investigaciones, total=len(resultados_investigaciones))
     # return render_template('public/results.html', resultados=dumps(resultados))
+
+
+@public_bp.route('/relacionados/<int:investigacion>', methods=['GET'])
+def relacionados(investigacion):
+    resultados_investigaciones, investigacion_original = investigaciones_relacionadas(investigacion)
+
+    return jsonify(relacionados=resultados_investigaciones, investigacion=investigacion_original)
