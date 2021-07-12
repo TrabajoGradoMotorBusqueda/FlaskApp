@@ -1,6 +1,9 @@
 const BASE_API = 'http://localhost:5000';
 const BASE_URL =  window.location.origin + window.location.pathname
 
+function loadingAnimation(hide){
+  hide ? $('#loading-animation').hide() : $('#loading-animation').show()
+}
 
 function investigacionItemTemplate(index, investigacion, relacionados = false) {
   let index_text = index + 1;
@@ -196,13 +199,14 @@ function paginateResults(data, paginator, resultsContainer) {
   });
 }
 
-const find_results = (async function load() {
+(async function load() {
   const endpoint = '/busqueda/';
 
   async function getData(url) {
     const response = await fetch(url);
     const data = await response.json();
 
+    loadingAnimation(true)
     if (data.investigaciones.length > 0) {
       return data;
     } else {
@@ -231,11 +235,13 @@ const find_results = (async function load() {
   $('#nav-input-search').on('keyup', async function (event){
     if (event.keyCode === 13) {
     event.preventDefault();
+    loadingAnimation(false)
     const endpoint = '/busqueda/';
 
     async function getData(url) {
       const response = await fetch(url);
       const data = await response.json();
+      loadingAnimation(true)
 
       if (data.investigaciones.length > 0) {
         return data;
@@ -268,12 +274,14 @@ const find_results = (async function load() {
   })
   $('#nav-icon-search').on('click', async function (event){
     event.preventDefault();
+    loadingAnimation(false)
     const endpoint = '/busqueda/';
 
     async function getData(url) {
       const response = await fetch(url);
       const data = await response.json();
 
+      loadingAnimation(true)
       if (data.investigaciones.length > 0) {
         return data;
       } else {
