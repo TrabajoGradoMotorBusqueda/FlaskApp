@@ -9,12 +9,17 @@
         {% block styles %}
             <!-- Bootstrap CSS -->
             {{ bootstrap.load_css() }}
-{#            <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Cookie">#}
             <link rel="shortcut icon" type="image/jpg" href="../static/search.ico"/>
             <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='fonts/fontawesome-all.min.css') }}">
             <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='fonts/font-awesome.min.css') }}">
             <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='fonts/fontawesome5-overrides.min.css') }}">
             <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/Footer.css')}}">
+            <style>
+                @import url("https://fonts.googleapis.com/css?family=Montserrat:300,400,500,600,700");
+                html *{
+                   font-family: "Montserrat", sans-serif;
+                }
+            </style>
         {% endblock %}
 
        	<title>{% block title %}Buscador UIMI{% endblock %}</title>
@@ -23,6 +28,30 @@
     <body>
         <!-- NavBar -->
     	{%block navbar%}{% endblock%}
+
+        <div class="modal fade" id="About">
+          <div class="modal-dialog modal-lg modal-dialog-centered">
+            <div class="modal-content">
+
+              <!-- cabecera del diálogo -->
+              <div class="modal-header">
+                <h2 class="modal-title" style="font-weight: bold; text-align: center">Acerca de Thaqhaña</h2>
+                <button type="button" class="close" data-dismiss="modal">X</button>
+              </div>
+
+              <!-- cuerpo del diálogo -->
+              <div class="modal-body">
+                  Se presenta la construcción de un motor de búsqueda semántico que utiliza una Ontología y un modelo entrenado con Machine Learning para soportar la búsqueda semántica de proyectos de investigación del Sistema de Investigaciones de la Universidad de Nariño. Para la construcción de THAQHAÑA, como se le denomina a este motor, se utilizó la metodología que comprende las etapas de: apropiación del conocimiento; instalación y configuración de las herramientas, bibliotecas y tecnologías; recolección, extracción, preparación, exploración y análisis de proyectos de investigación; diseño, desarrollo, implementación y despliegue del motor de búsqueda semántico; realización de pruebas finales y evaluación del rendimiento del motor de búsqueda semántico; y finalmente la documentación respectiva.
+              </div>
+
+              <!-- pie del diálogo -->
+              <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+              </div>
+
+            </div>
+          </div>
+        </div>
 
         <!-- Contenido de Pagina -->
         {% block content %}{% endblock %}

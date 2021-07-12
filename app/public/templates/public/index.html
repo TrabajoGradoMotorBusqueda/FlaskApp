@@ -14,28 +14,34 @@
 {% block content %}
     <div id="search-body">
         <div class="container">
-            <div class="row">
-                <div id="logo-buscador" class="col-md-12">
-                    <img src="{{ url_for('static', filename='img/udenar-search.png') }}">
-                </div>
-            </div>
-            <div class="row">
-                <div id="search-bar" class="col-md-12" >
+            <div class="logos-title">
+                <div class="container">
                     <div class="row">
-                        <div class="col-md-10 offset-md-1">
-                            <div class="card m-auto" style="max-width:850px">
-                                <form class="card-body" action="" method="post" role="search">
-                                    <div class="d-flex align-items-center">
-                                        {{ search_form.csrf_token() }}
-                                        <i class="fas fa-search d-none d-sm-block h4 text-body m-0"></i>
-                                        {{ search_form.searchbar(class='form-control form-control-lg flex-shrink-1 form-control-borderless',
-                                        placeholder='Busqueda de documentos de Investigación', type='search', value='') }}
-                                        {{ search_form.submit(class='btn btn-success btn-lg', type='submit') }}
-                                    </div>
-                                </form>
-                            </div>
+                        <div class="col-md-4 col-xl-4 align footer-center-info" align="center"><img src="{{ url_for('static', filename='img/udenar-search.png') }}" style="width: 150px" align="center"></div>
+                        <div class="col-md-4" align="center"><img class="align center" src="{{ url_for('static', filename='img/motor.png') }}" width="200px" height="180px"></div>
+                        <div class="col-md-4 col-xs-12" align="center"><img class="align-items-center" src="{{ url_for('static', filename='img/grias-logo.png') }}" style="width: 200px;margin-bottom: 0;margin-right: 0;margin-top: 0;" width="200px" height="150px"></div>
+                        <div class="col-md-12 col-xl-12" style="margin: 1px;">
+                            <h1><strong>Thaqhaña</strong> <br> Motor de Búsqueda Semántico</h1>
                         </div>
                     </div>
+                </div>
+            </div>
+
+            <div class="col-md-10 col-xl-10 offset-md-1 search-bar-form">
+                <div class="card m-auto">
+                    <form action="" method="post" role="search">
+                        <div class="card-body">
+                                <div class="d-flex align-items-center">
+                                    {{ search_form.csrf_token() }}
+                                    <i class="fas fa-search d-none d-sm-block h4 text-body m-0" style=""></i>
+                                    {{ search_form.searchbar(class='form-control form-control-lg flex-shrink-1',
+                                    placeholder='Busqueda de documentos de Investigación', type='search', value='', style="margin-left: 10px") }}
+                                </div>
+                        </div>
+                        <div class="col-md-12 text-center" style="margin-bottom: 10px">
+                            {{ search_form.submit(class='btn btn-success btn-lg', type='submit') }}
+                        </div>
+                    </form>
                 </div>
             </div>
         </div>

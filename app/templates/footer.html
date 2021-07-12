@@ -1,26 +1,30 @@
 <footer>
     <div class="row">
         <div class="col-sm-6 col-md-4 footer-navigation">
-            <h3><a href="#"></a><img src="{{ url_for('static', filename='img/udenar-footer.png') }}"></h3>
-            <p class="links"><a href="#">Inicio</a><strong> · </strong><a href="#">Blog</a><strong> · </strong><a href="#">Nosotros</a><strong> · </strong><a href="#">Contacto</a><a href="#"></a></p>
-            <p class="company-name">Universidad de Nariño © 2021</p>
+            <div>
+                <a href="https://www.udenar.edu.co/"><span><img src="{{ url_for('static', filename='img/udenar-footer.png') }}"></span></a>
+                <a href="http://grias.udenar.edu.co/grias/"><span><img src="{{ url_for('static', filename='img/grias.png') }}" style="width: 225px; padding-top: 10px; margin-left: -25px"></span></a>
+            </div>
+            <br>
+            <p class="links"><a href="{{ url_for('public.index') }}">Inicio</a><strong> · </strong><a href="" data-toggle="modal" data-target="#About">Acerca de</a></p>
+            <p class="company-name">Universidad de Nariño - 2021</p>
         </div>
         <div class="col-sm-6 col-md-4 footer-contacts">
             <div><span class="fa fa-map-marker footer-contacts-icon"> </span>
                 <p><span class="new-line-span">Torobajo</span> Pasto, Nariño</p>
             </div>
             <div><i class="fa fa-phone footer-contacts-icon"></i>
-                <p class="footer-center-info email text-left"> +1 555 123456</p>
+                <p class="footer-center-info email text-left">(+057) 7244309–7311449</p>
             </div>
             <div><i class="fa fa-envelope footer-contacts-icon"></i>
-                <p> <a href="#" target="_blank">udenar@company.com</a></p>
+                <p> <a href="mailto:grias@udenar.edu.co">grias@udenar.edu.co</a></p>
             </div>
         </div>
         <div class="clearfix"></div>
         <div class="col-md-4 footer-about">
-            <h4>Acerca de UIMI</h4>
-            <p> Lorem ipsum dolor sit amet, consectateur adispicing elit. Fusce euismod convallis velit, eu auctor lacus vehicula sit amet. </p>
-            <div class="social-links social-icons"><a href="#"><i class="fa fa-facebook"></i></a><a href="#"><i class="fa fa-twitter"></i></a><a href="#"><i class="fa fa-linkedin"></i></a><a href="#"><i class="fa fa-github"></i></a></div>
+            <h4>Acerca de Thaqhaña</h4>
+            <p> Es un motor de búsqueda semántico que integra una Ontología y un modelo entrenado con Machine Learning para deducir en potencia, poder y efectividad semántica en todo su sentido. </p>
+            <div class="social-links social-icons"><a href="https://www.facebook.com/udenar/" target="_blank"><i class="fa fa-facebook"></i></a><a href="https://twitter.com/Udenar?s=20" target="_blank"><i class="fa fa-twitter"></i></a><a href="https://www.linkedin.com/school/universidad-de-nari%C3%B1o/" target="_blank"><i class="fa fa-linkedin"></i></a><a href="https://github.com/TrabajoGradoMotorBusqueda" target="_blank"><i class="fa fa-github"></i></a></div>
         </div>
     </div>
 </footer>

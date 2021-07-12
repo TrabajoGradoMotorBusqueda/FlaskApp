@@ -23,3 +23,30 @@
   box-shadow: none;
 }
 
+.logos-title{
+  margin-top: 150px;
+  margin-bottom: 0px;
+  margin-left: 100px;
+  margin-right: 100px;
+  text-align: center;
+}
+
+
+@media (max-width: 575.98px) {
+  .search-bar-form{
+    position: relative;
+    margin-left: -115px;
+    width: 450px;
+  }
+
+  .logos-title{
+    position: relative;
+    margin-left: -10px;
+    text-align: justify;
+  }
+
+  .logos-title img{
+    display: none;
+  }
+
+}
