@@ -1,4 +1,6 @@
 const BASE_API = 'http://localhost:5000';
+const BASE_URL =  window.location.origin + window.location.pathname
+
 
 function investigacionItemTemplate(index, investigacion, relacionados = false) {
   let index_text = index + 1;
@@ -194,7 +196,7 @@ function paginateResults(data, paginator, resultsContainer) {
   });
 }
 
-(async function load() {
+const find_results = (async function load() {
   const endpoint = '/busqueda/';
 
   async function getData(url) {
@@ -222,3 +224,85 @@ function paginateResults(data, paginator, resultsContainer) {
   //   $resultsContainer
   // );
 })();
+
+
+(
+  function searchBar(){
+  $('#nav-input-search').on('keyup', async function (event){
+    if (event.keyCode === 13) {
+    event.preventDefault();
+    const endpoint = '/busqueda/';
+
+    async function getData(url) {
+      const response = await fetch(url);
+      const data = await response.json();
+
+      if (data.investigaciones.length > 0) {
+        return data;
+      } else {
+        throw new Error('No se encontro ningun resultado');
+      }
+    }
+
+    // Consultar Busqueda
+    const query =this.value;
+
+    const resultados = await getData(BASE_API + endpoint + query);
+
+    // Actualizar URL
+    let params = new URLSearchParams(window.location.search);
+    params.set('query', query)
+
+    const next_url = BASE_URL + '?' + params.toString()
+    const next_title = 'Thaqhana |'+ query
+    const nextState = { additionalInformation: 'Update URL' };
+    window.history.pushState(nextState, next_title, next_url);
+    window.history.replaceState(nextState, next_title, next_url);
+    document.title = next_title
+
+    const $resultsContainer = document.querySelector('.profiletimeline');
+    // const $resultsContainer = $('.profiletimeline');
+    const $paginator = $('#paginator');
+    paginateResults(resultados.investigaciones, $paginator, $resultsContainer);
+  }
+  })
+  $('#nav-icon-search').on('click', async function (event){
+    event.preventDefault();
+    const endpoint = '/busqueda/';
+
+    async function getData(url) {
+      const response = await fetch(url);
+      const data = await response.json();
+
+      if (data.investigaciones.length > 0) {
+        return data;
+      } else {
+        throw new Error('No se encontro ningun resultado');
+      }
+    }
+
+    // Consultar Busqueda
+    const query = $('#nav-input-search')[0].value;
+    const resultados = await getData(BASE_API + endpoint + query);
+
+    // Actualizar URL
+    let params = new URLSearchParams(window.location.search);
+    params.set('query', query)
+
+    const next_url = BASE_URL + '?' + params.toString()
+    const next_title = 'Thaqhana |'+ query
+    const nextState = { additionalInformation: 'Update URL' };
+    window.history.pushState(nextState, next_title, next_url);
+    window.history.replaceState(nextState, next_title, next_url);
+    document.title = next_title
+
+
+    const $resultsContainer = document.querySelector('.profiletimeline');
+    // const $resultsContainer = $('.profiletimeline');
+    const $paginator = $('#paginator');
+    paginateResults(resultados.investigaciones, $paginator, $resultsContainer);
+  })
+}
+)();
+
+

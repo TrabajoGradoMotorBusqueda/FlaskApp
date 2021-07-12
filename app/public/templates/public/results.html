@@ -8,6 +8,10 @@
     <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/Pagination.css')}}">
 {% endblock %}
 
+{% block title %}
+    Thaqhana
+    | {{query}}
+{% endblock %}
 
 {%block navbar%}
     {% include 'navbar-results.html' %}
