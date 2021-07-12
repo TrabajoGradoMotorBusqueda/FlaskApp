@@ -39,7 +39,7 @@ def palabras_similares(palabras):
             palabras_limpias.append(palabra)
 
     if len(palabras_w2v) == 0:
-        return palabras_limpias
+        return None, palabras_limpias
     # Llegan las palabras
     # palabras_relacionadas = elasticsearch.most_similar_words(palabras_busqueda) # Implementacion w2v in ElasticSearch
     palabras_recomendaciones = modelo.wv.most_similar(palabras_w2v, topn=25)

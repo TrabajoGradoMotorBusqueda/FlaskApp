@@ -42,7 +42,8 @@ def resultados():
 @public_bp.route('/busqueda/<query>', methods=['GET'])
 def busqueda(query):
     resultados_investigaciones = search_engine(query)
-
+    if resultados_investigaciones is None:
+        return jsonify(error=f"Investigaciones no encontradas para '{query}'")
     return jsonify(investigaciones=resultados_investigaciones, total=len(resultados_investigaciones))
     # return render_template('public/results.html', resultados=dumps(resultados))
 

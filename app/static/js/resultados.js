@@ -1,8 +1,20 @@
-const BASE_API = 'http://localhost:5000';
-const BASE_URL =  window.location.origin + window.location.pathname
+const BASE_API = window.location.origin;
+const BASE_URL = window.location.origin + window.location.pathname;
 
-function loadingAnimation(hide){
-  hide ? $('#loading-animation').hide() : $('#loading-animation').show()
+function loadingAnimation(hide) {
+  hide ? $('#loading-animation').hide() : $('#loading-animation').show();
+}
+
+function searchNotFound(show, message = '') {
+  if (show) {
+    $('.profiletimeline').empty();
+    $('#paginator').empty();
+    $('#search-not-found').show();
+    $('#search-not-found').empty();
+    $('#search-not-found').append('<h1>' + message + '</h1>');
+  } else {
+    $('#search-not-found').hide();
+  }
 }
 
 function investigacionItemTemplate(index, investigacion, relacionados = false) {
@@ -131,7 +143,7 @@ function renderInvestigacionesRelacionadas(investigaciones) {
   const $container_related = document.querySelector('.modal-body');
   const $title_modal = document.querySelector('.modal-title');
 
-  $title_modal.innerHTML = investigaciones.investigacion.titulo
+  $title_modal.innerHTML = investigaciones.investigacion.titulo;
   if ($container_related.children.length > 0) {
     $container_related.innerHTML = '';
   }
@@ -148,7 +160,6 @@ function renderInvestigacionesRelacionadas(investigaciones) {
       let $container_investigacion = document.getElementById(investigacion.id);
       html2pdf($container_investigacion);
     });
-
   });
 }
 
@@ -165,13 +176,13 @@ const investigacionesRelacionadas = async (id) => {
     } else {
       throw new Error('No se encontro ningun resultado');
     }
-  }
+  };
   // Consultar Busqueda
   const relacionados = await getData(BASE_API + endpoint + id);
 
   // Renderizar Resultados
   renderInvestigacionesRelacionadas(relacionados);
-}
+};
 
 function paginateResults(data, paginator, resultsContainer) {
   paginator.pagination({
@@ -206,7 +217,10 @@ function paginateResults(data, paginator, resultsContainer) {
     const response = await fetch(url);
     const data = await response.json();
 
-    loadingAnimation(true)
+    loadingAnimation(true);
+    if (data.error) {
+      return data;
+    }
     if (data.investigaciones.length > 0) {
       return data;
     } else {
@@ -219,69 +233,87 @@ function paginateResults(data, paginator, resultsContainer) {
   const query = params.get('query');
   const resultados = await getData(BASE_API + endpoint + query);
 
-  const $resultsContainer = document.querySelector('.profiletimeline');
-  // const $resultsContainer = $('.profiletimeline');
-  const $paginator = $('#paginator');
-  paginateResults(resultados.investigaciones, $paginator, $resultsContainer);
-  // renderResultadosInvestigaciones(
-  //   resultados.investigaciones,
-  //   $resultsContainer
-  // );
-})();
-
-
-(
-  function searchBar(){
-  $('#nav-input-search').on('keyup', async function (event){
-    if (event.keyCode === 13) {
-    event.preventDefault();
-    loadingAnimation(false)
-    const endpoint = '/busqueda/';
-
-    async function getData(url) {
-      const response = await fetch(url);
-      const data = await response.json();
-      loadingAnimation(true)
-
-      if (data.investigaciones.length > 0) {
-        return data;
-      } else {
-        throw new Error('No se encontro ningun resultado');
-      }
-    }
-
-    // Consultar Busqueda
-    const query =this.value;
-
-    const resultados = await getData(BASE_API + endpoint + query);
-
-    // Actualizar URL
-    let params = new URLSearchParams(window.location.search);
-    params.set('query', query)
-
-    const next_url = BASE_URL + '?' + params.toString()
-    const next_title = 'Thaqhana |'+ query
-    const nextState = { additionalInformation: 'Update URL' };
-    window.history.pushState(nextState, next_title, next_url);
-    window.history.replaceState(nextState, next_title, next_url);
-    document.title = next_title
-
+  if (!resultados.error) {
+    searchNotFound(false);
     const $resultsContainer = document.querySelector('.profiletimeline');
     // const $resultsContainer = $('.profiletimeline');
     const $paginator = $('#paginator');
     paginateResults(resultados.investigaciones, $paginator, $resultsContainer);
+    // renderResultadosInvestigaciones(
+    //   resultados.investigaciones,
+    //   $resultsContainer
+    // );
+  } else {
+    searchNotFound(true, resultados.error);
   }
-  })
-  $('#nav-icon-search').on('click', async function (event){
+})();
+
+(function searchBar() {
+  $('#nav-input-search').on('keyup', async function (event) {
+    if (event.keyCode === 13) {
+      event.preventDefault();
+      loadingAnimation(false);
+      const endpoint = '/busqueda/';
+
+      async function getData(url) {
+        const response = await fetch(url);
+        const data = await response.json();
+
+        loadingAnimation(true);
+        if (data.error) {
+          return data;
+        }
+        if (data.investigaciones.length > 0) {
+          return data;
+        } else {
+          throw new Error('No se encontro ningun resultado');
+        }
+      }
+
+      // Consultar Busqueda
+      const query = this.value;
+
+      const resultados = await getData(BASE_API + endpoint + query);
+
+      // Actualizar URL
+      let params = new URLSearchParams(window.location.search);
+      params.set('query', query);
+
+      const next_url = BASE_URL + '?' + params.toString();
+      const next_title = 'Thaqhana |' + query;
+      const nextState = { additionalInformation: 'Update URL' };
+      window.history.pushState(nextState, next_title, next_url);
+      window.history.replaceState(nextState, next_title, next_url);
+      document.title = next_title;
+
+      if (!resultados.error) {
+        searchNotFound(false);
+        const $resultsContainer = document.querySelector('.profiletimeline');
+        // const $resultsContainer = $('.profiletimeline');
+        const $paginator = $('#paginator');
+        paginateResults(
+          resultados.investigaciones,
+          $paginator,
+          $resultsContainer
+        );
+      } else {
+        searchNotFound(true, resultados.error);
+      }
+    }
+  });
+  $('#nav-icon-search').on('click', async function (event) {
     event.preventDefault();
-    loadingAnimation(false)
+    loadingAnimation(false);
     const endpoint = '/busqueda/';
 
     async function getData(url) {
       const response = await fetch(url);
       const data = await response.json();
 
-      loadingAnimation(true)
+      loadingAnimation(true);
+      if (data.error) {
+        return data;
+      }
       if (data.investigaciones.length > 0) {
         return data;
       } else {
@@ -295,22 +327,26 @@ function paginateResults(data, paginator, resultsContainer) {
 
     // Actualizar URL
     let params = new URLSearchParams(window.location.search);
-    params.set('query', query)
+    params.set('query', query);
 
-    const next_url = BASE_URL + '?' + params.toString()
-    const next_title = 'Thaqhana |'+ query
+    const next_url = BASE_URL + '?' + params.toString();
+    const next_title = 'Thaqhana |' + query;
     const nextState = { additionalInformation: 'Update URL' };
     window.history.pushState(nextState, next_title, next_url);
     window.history.replaceState(nextState, next_title, next_url);
-    document.title = next_title
+    document.title = next_title;
 
-
-    const $resultsContainer = document.querySelector('.profiletimeline');
-    // const $resultsContainer = $('.profiletimeline');
-    const $paginator = $('#paginator');
-    paginateResults(resultados.investigaciones, $paginator, $resultsContainer);
-  })
-}
-)();
-
-
+    if (!resultados.error) {
+      searchNotFound(false);
+      const $resultsContainer = document.querySelector('.profiletimeline');
+      const $paginator = $('#paginator');
+      paginateResults(
+        resultados.investigaciones,
+        $paginator,
+        $resultsContainer
+      );
+    } else {
+      searchNotFound(true, resultados.error);
+    }
+  });
+})();
