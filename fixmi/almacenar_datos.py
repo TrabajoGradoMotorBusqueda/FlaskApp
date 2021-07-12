@@ -36,9 +36,6 @@ def construir_corpus():
         print('Investigacion: ' + str(investigacion.id) + ' Completo')
     print('Corpus Añadidos !')
 
-    import json
-    with open("/home/sangeeky/palabras.json", "w") as outfile:
-        json.dump(diccionario_lemas, outfile)
     # Construir el vocabulario
     almacenar_vocabulario(diccionario_lemas)
 
